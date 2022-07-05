@@ -43,7 +43,7 @@
                 </ul>
                 <form class="d-inline-flex">
                   <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                  <button class="btn btn-outline-dark" type="submit">Search</button>
+                  <button class="btn alert-dark btn-outline-dark rounded-pill" type="submit">Search</button>
                 </form>
               </div>
             </div>
@@ -58,8 +58,8 @@
                     <br><h3>LOGIN</h3><hr>
                 </div>
               <div class="form-floating mb-3 mx-3">
-                <input type="text" class="form-control rounded-pill" id="username" name="username" placeholder='Enter your E-mail address' maxlength="20" required>
-                <label for="username"> <i class="fas fa-user px-2" aria-hidden="true"></i> Username</label>
+                <input type="email" class="form-control rounded-pill" id="email" name="email" placeholder='Enter your E-mail address' maxlength="20" required>
+                <label for="email"> <i class="fas fa-user px-2" aria-hidden="true"></i> E-Mail</label>
               </div>
               <div class="form-floating mx-3">
                 <input type="password" class="form-control rounded-pill" id="password" name="password" placeholder="Password"  autocomplete="off" required>
@@ -71,13 +71,13 @@
               </div><br>
                   
                   <div class="text-center">
-                  <button type="submit" class="btn btn-success rounded-pill col-4">Log in </button><br><br>
-                  <p><a href="{% url 'forgot_password' %}">Forgotten your password?</a></p><hr>
-                  
-                    <p class="text-center">
-                      NOT YET REGISTERED?<br> <a href="#register" role="button" class="btn btn-success rounded-pill col-4">Register</a>
+                  <button type="submit" class="btn alert-dark btn-outline-dark rounded-pill col-4">Login </button><br><br>
+                  <p><a href="{% url 'forgot_password' %}">Forgotten your password?</a></p>
+                  <div class="d-block d-md-none">
+                    <p class="text-center"><hr>
+                      NOT YET REGISTERED?<br> <a href="#register" role="button" class="btn alert-dark btn-outline-dark rounded-pill col-4">Register</a>
                     </p>
-                
+                  </div>
                   </div><br>
             </form>
             
@@ -93,14 +93,26 @@
                 <div class="text-center">
                     <br><h3>REGISTER</h3><hr>
                 </div>
-                
               <div class="form-floating mb-3 mx-3">
-                <input type="text" class="form-control rounded-pill" id="username" name="username" placeholder='Enter your E-mail address' maxlength="20" required>
-                <label for="username"> <i class="fas fa-user px-2" aria-hidden="true"></i> Username</label>
+                  <input type="text" class="form-control rounded-pill" id="firstName" name="first_name" maxlength="20" placeholder="First Name" required>
+                  <label for="firstName"><i class="fas fa-user px-2" aria-hidden="true"> </i>First Name</label>
               </div>
+              <div class="form-floating mb-3 mx-3">
+                  <input type="text" class="form-control rounded-pill" id="lastName" name="last_name" maxlength="20" placeholder="Last Name" required>
+                  <label for="lastName"><i class="fas fa-user px-2" aria-hidden="true"> </i>Last Name</label>
+              </div>
+              <div class="form-floating mb-3 mx-3">
+                <input type="email" class="form-control rounded-pill" id="email" name="email" placeholder="Email" required>
+                <label for="email"><i class="fas fa-envelope px-2"></i> E-Mail</label>
+              </div>
+                
               <div class="form-floating mx-3">
                 <input type="password" class="form-control rounded-pill" id="password" name="password" placeholder="Password"  autocomplete="off" required>
                 <label for="password"><i class="fas fa-key px-2"></i> Password</label>
+              </div><br>
+              <div class="form-floating mx-3">
+                <input type="password2" class="form-control rounded-pill" id="password2" name="password2" placeholder="Confirm Password"  autocomplete="off" required>
+                <label for="password2"><i class="fas fa-key px-2"></i> Confirm Password</label>
               </div><br>
               <div class="form-check mb-3 mx-3">
                 <input class="form-check-input" type="checkbox" id="show_password" onclick="showPassword()">
@@ -108,13 +120,7 @@
               </div><br>
                   
                   <div class="text-center">
-                  <button type="submit" class="btn btn-success rounded-pill col-4">Log in </button><br><br>
-                  <p><a href="{% url 'forgot_password' %}">Forgotten your password?</a></p><hr>
-                  
-                    <p class="text-center">
-                      NOT YET REGISTERED?<br> <a href="{% url 'register' %}" role="button" class="btn btn-success rounded-pill col-4">Register</a>
-                    </p>
-                
+                  <button type="submit" class="btn alert-dark btn-outline-dark rounded-pill col-4">Register </button><br><br>        
                   </div><br>
             </form>
           </div>
