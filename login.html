@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Spares ecommerce">
+    <meta name="author" content="Timothy Madegwa">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <title>Login/Register</title>
+  </head>
+  <body>
+    <div class="container-fluid">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container-fluid">
+              <a class="navbar-brand" href="#">Navbar scroll</a>
+              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarScroll">
+                <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
+                  <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="#">Home</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#">Link</a>
+                  </li>
+                  <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      Link
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
+                      <li><a class="dropdown-item" href="#">Action</a></li>
+                      <li><a class="dropdown-item" href="#">Another action</a></li>
+                      <li><hr class="dropdown-divider"></li>
+                      <li><a class="dropdown-item" href="#">Something else here</a></li>
+                    </ul>
+                  </li>
+                  
+                </ul>
+                <form class="d-inline-flex">
+                  <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                  <button class="btn btn-outline-dark" type="submit">Search</button>
+                </form>
+              </div>
+            </div>
+          </nav>
+    </div><br><br>
+
+    <div class="container">
+        <div class="row">
+          <div class="col-md-5">
+            <form class="col-md-12 float-center shadow-lg" action="{% url 'login' %}" method="post" autocomplete="off">
+                <div class="text-center">
+                    <br><h3>LOGIN</h3><hr>
+                </div>
+              <div class="form-floating mb-3 mx-3">
+                <input type="text" class="form-control rounded-pill" id="username" name="username" placeholder='Enter your E-mail address' maxlength="20" required>
+                <label for="username"> <i class="fas fa-user px-2" aria-hidden="true"></i> Username</label>
+              </div>
+              <div class="form-floating mx-3">
+                <input type="password" class="form-control rounded-pill" id="password" name="password" placeholder="Password"  autocomplete="off" required>
+                <label for="password"><i class="fas fa-key px-2"></i> Password</label>
+              </div><br>
+              <div class="form-check mb-3 mx-3">
+                <input class="form-check-input" type="checkbox" id="show_password" onclick="showPassword()">
+                <label class="form-check-label" for="show_password">Show Password</label>
+              </div><br>
+                  
+                  <div class="text-center">
+                  <button type="submit" class="btn btn-success rounded-pill col-4">Log in </button><br><br>
+                  <p><a href="{% url 'forgot_password' %}">Forgotten your password?</a></p><hr>
+                  
+                    <p class="text-center">
+                      NOT YET REGISTERED?<br> <a href="#register" role="button" class="btn btn-success rounded-pill col-4">Register</a>
+                    </p>
+                
+                  </div><br>
+            </form>
+            
+          </div>
+          <div class="col-md-2">
+            <div class="text-center">
+                <h2>OR</h2>
+            </div>
+            
+          </div>
+          <div class="col-md-5" id="register">
+            <form class="col-md-12 float-center shadow-lg" action="{% url 'login' %}" method="post" autocomplete="off">
+                <div class="text-center">
+                    <br><h3>REGISTER</h3><hr>
+                </div>
+                
+              <div class="form-floating mb-3 mx-3">
+                <input type="text" class="form-control rounded-pill" id="username" name="username" placeholder='Enter your E-mail address' maxlength="20" required>
+                <label for="username"> <i class="fas fa-user px-2" aria-hidden="true"></i> Username</label>
+              </div>
+              <div class="form-floating mx-3">
+                <input type="password" class="form-control rounded-pill" id="password" name="password" placeholder="Password"  autocomplete="off" required>
+                <label for="password"><i class="fas fa-key px-2"></i> Password</label>
+              </div><br>
+              <div class="form-check mb-3 mx-3">
+                <input class="form-check-input" type="checkbox" id="show_password" onclick="showPassword()">
+                <label class="form-check-label" for="show_password">Show Password</label>
+              </div><br>
+                  
+                  <div class="text-center">
+                  <button type="submit" class="btn btn-success rounded-pill col-4">Log in </button><br><br>
+                  <p><a href="{% url 'forgot_password' %}">Forgotten your password?</a></p><hr>
+                  
+                    <p class="text-center">
+                      NOT YET REGISTERED?<br> <a href="{% url 'register' %}" role="button" class="btn btn-success rounded-pill col-4">Register</a>
+                    </p>
+                
+                  </div><br>
+            </form>
+          </div>
+        </div><br><br><br><br>
+    </div>
+
+
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+  </body>
+
+    <!-- Copyright -->
+    <div class="footer-copyright text-center py-1 bg-dark fixed-bottom">
+        <p style="color: white;">© <span id="copyright_year"></span> All Rights Reserved. Powered by <a style="color: white;" href="https://aqila.co.ke" target="_blank" rel="noreferrer">Aqila</a></p>
+    </div>
+    <!-- Copyright -->
+    <script>
+        const d = new Date();
+        document.getElementById("copyright_year").innerHTML = d.getFullYear();
+    </script>
+    <!-- Footer -->
+</html>
