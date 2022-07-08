@@ -1,0 +1,15 @@
+#feedback {
+    display: block;
+    position: fixed;
+    top: 45%;
+    right: 10px;
+    z-index: 99;
+    font-size: 18px;
+    border: none;
+    outline: none;
+    color: white;
+    cursor: pointer;
+    padding-left: 20px;
+    padding-right:20px;
+    border-radius: 4px;
+  }
