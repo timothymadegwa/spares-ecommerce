@@ -116,7 +116,43 @@
         </table>
         <div class="text-center">
             <h5>Your Total is KES 1480</h5><br>
+
+            <form class="col-md-12 float-center shadow-lg" action="{% url 'login' %}" method="post" autocomplete="off">
+                <div class="text-center text-danger">
+                    <br><h3>Billing address</h3><hr>
+                </div>
+              <div class="form-floating mb-3 mx-3">
+                <input type="text" class="form-control rounded-pill" id="name" name="name" placeholder='Enter your Full Name' maxlength="20" required>
+                <label for="name"> <i class="fas fa-user px-2" aria-hidden="true"></i> Full Name</label>
+              </div>
+              <div class="form-floating mx-3">
+                <select class="form-select form-control me-2 rounded-pill" aria-label="Default select example">
+                    <option selected>Select One</option>
+                    <option value="1">Nairobi</option>
+                    <option value="2">Eldoret</option>
+                </select>
+              </div><br>
+              <div class="form-floating mx-3">
+                <input type="password" class="form-control rounded-pill" id="password" name="password" placeholder="Password"  autocomplete="off" required>
+                <label for="password"><i class="fas fa-key px-2"></i> Password</label>
+              </div><br>
+              <div class="form-check mb-3 mx-3">
+                <input class="form-check-input" type="checkbox" id="show_password" onclick="showPassword()">
+                <label class="form-check-label" for="show_password">Show Password</label>
+              </div><br>
+                  
+                  <div class="text-center">
+                  <button type="submit" class="btn alert-dark btn-outline-dark rounded-pill col-4">Login </button><br><br>
+                  <p><a href="{% url 'forgot_password' %}">Forgotten your password?</a></p>
+                  <div class="d-block d-md-none">
+                    <p class="text-center"><hr>
+                      NOT YET REGISTERED?<br> <a href="#register" role="button" class="btn alert-dark btn-outline-dark rounded-pill col-4">Register</a>
+                    </p>
+                  </div>
+                  </div><br>
+            </form>
         </div>
+
         
         <br><br><br>
     </div>
