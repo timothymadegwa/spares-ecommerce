@@ -30,17 +30,17 @@
         <div class="navbar">
         <ul class="navbar-nav me-auto my-2 my-lg-0">
             <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="home.html"><i class="fas fa-home fa-lg px-2"></i> Home</a>
+            <a class="nav-link active" aria-current="page" href="{% url 'home' %}"><i class="fas fa-home fa-lg px-2"></i> Home</a>
             </li>
             <li class="nav-item">
-            <a class="nav-link" href="login.html"><i class="fas fa-sign-in-alt fa-lg px-2"></i> Login</a>
+            <a class="nav-link" href="{% url 'login' %}"><i class="fas fa-sign-in-alt fa-lg px-2"></i> Login</a>
             </li>
             <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 Shop for
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
-                <li><a class="dropdown-item" href="spares.html">Spare Parts</a></li>
+                <li><a class="dropdown-item" href="{% url 'spares' %}">Spare Parts</a></li>
                 <li><a class="dropdown-item" href="#">Used Cars</a></li>
                 <li><hr class="dropdown-divider"></li>
                 <li><a class="dropdown-item" href="#">View Cart</a></li>
