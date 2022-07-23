@@ -21,6 +21,9 @@ class Inventory(models.Model):
             
         verbose_name = 'inventory'
         verbose_name_plural = 'inventories'
+    
+    def __str__(self):
+        return self.name
 
 
     def total(self):
