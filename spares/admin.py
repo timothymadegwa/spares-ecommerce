@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Inventory, Category, Brand
+from .models import *
 #from import_export.admin import ImportExportModelAdmin
 
 # Register your models here.
@@ -21,5 +21,10 @@ class CategoryAdmin(admin.ModelAdmin):
     list_display = ('id', 'category_name')
 
 admin.site.register(Category, CategoryAdmin)
+
+class CartAdmin(admin.ModelAdmin):
+    list_display = ('id', 'user', 'quantity')
+
+admin.site.register(Cart, CartAdmin)
 
 admin.site.site_header = "Spares Shop KE"

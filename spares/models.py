@@ -1,5 +1,7 @@
 from django.db import models
 
+from accounts.models import User
+
 # Create your models here.
 class Brand(models.Model):
     brand_name = models.CharField(max_length=100, unique=True)
@@ -35,9 +37,11 @@ class Inventory(models.Model):
     def __str__(self):
         return self.name
 
-
-    def total(self):
-        return round(self.quantity * self.price, 2)
+    @property
+    def selling_price(self):
+        if self.has_discount:
+            return self.price - self.discount
+        return self.price
 '''
     @property
     def quantity_sold(self):
@@ -46,3 +50,10 @@ class Inventory(models.Model):
         for item in saleitems:
             total += item.quantity_sold
 '''
+class Cart(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    quantity = models.IntegerField(null=False, blank=False, default=1)
+    items = models.ForeignKey(Inventory, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.user.email
