@@ -52,8 +52,9 @@ class Inventory(models.Model):
 '''
 class Cart(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    quantity = models.IntegerField(null=False, blank=False, default=1)
-    items = models.ForeignKey(Inventory, on_delete=models.CASCADE)
+    quantity = models.IntegerField(null=False, blank=False, default=0)
+    item = models.ForeignKey(Inventory, on_delete=models.CASCADE)
+    is_ordered = models.BooleanField(default=False)
 
     def __str__(self):
         return self.user.email

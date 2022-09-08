@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.utils.translation import gettext_lazy as _
+from django.utils import timezone
 
 # Create your models here.
 
@@ -43,4 +44,11 @@ class User(AbstractUser):
     REQUIRED_FIELDS = []
     objects = CustomUserManager()
 
- 
+
+class FailedLogin(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    date = models.DateTimeField(default=timezone.now)
+    reason = models.CharField(max_length=100, blank=False, null=False)
+
+    def __str__(self):
+        return self.user.username

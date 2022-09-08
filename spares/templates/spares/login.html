@@ -7,6 +7,7 @@
         <div class="row">
           <div class="col-md-5">
             <form class="col-md-12 float-center shadow-lg" action="{% url 'login' %}" method="post" autocomplete="off">
+              {% csrf_token %}
                 <div class="text-center text-danger">
                     <br><h3>LOGIN</h3><hr>
                 </div>
