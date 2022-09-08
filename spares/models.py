@@ -1,15 +1,25 @@
 from django.db import models
 
 # Create your models here.
-CHOICES = (
-    ('Perfume', 'Perfume'),
-    ('Cosmetics', 'Cosmetics'),
-)
+class Brand(models.Model):
+    brand_name = models.CharField(max_length=100, unique=True)
+
+    def __str__(self):
+        return self.name
+
+class Category(models.Model):
+    category_name = models.CharField(max_length=100, unique=True)
+
+    class Meta:
+        verbose_name_plural = "categories"
+    
+    def __str__(self):
+        return self.name
 
 class Inventory(models.Model):
     name = models.CharField(max_length=100, unique=True)
-    brand = models.CharField(max_length=100, choices=CHOICES)
-    category = models.CharField(max_length=100, choices=CHOICES)
+    brand = models.ForeignKey(Brand, on_delete=models.CASCADE, default=1)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, default=1)
     quantity = models.PositiveIntegerField(default=0, blank=False, null=False)
     price = models.FloatField(null=False, blank=False)
     is_displayed = models.BooleanField(default=True)

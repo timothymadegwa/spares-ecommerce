@@ -4,10 +4,10 @@ from .models import Inventory
 
 # Register your models here.
 class InventoryAdmin(admin.ModelAdmin):
-    list_display = ('id','name', 'category', 'brand', 'quantity','price', 'discount', 'is_displayed')
+    list_display = ('id','name', 'category', 'quantity','price', 'discount', 'is_displayed')
     list_display_links = ('id', 'name')
     list_editable = ('is_displayed',)
-    list_filter = ('category', 'brand')
+    list_filter = ('category',)
     search_fields = ('name',)
 
 admin.site.register(Inventory, InventoryAdmin)

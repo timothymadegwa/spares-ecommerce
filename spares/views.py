@@ -3,8 +3,6 @@ from django.contrib.auth.decorators import login_required
 from .models import Inventory
 
 # Create your views here.
-def login(request):
-    return render(request, 'spares/login.html')
 
 # @login_required(login_url='login')
 def home(request):
