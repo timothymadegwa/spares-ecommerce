@@ -133,3 +133,10 @@ def register(request):
                 messages.error(request, message)
                 return render(request, 'spares/login.html', context)
         return render(request, 'spares/login.html')
+
+def logout(request):
+    if request.method == "POST":
+        auth.logout(request)
+        message = "You have been logged out"
+        messages.success(request, message)
+        return redirect('login')

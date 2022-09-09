@@ -58,6 +58,13 @@
                 </form><hr>
             </ul>
             </li>
+            <li class="nav-item nav-link">
+                <a class="nav-link" href="javascript:{document.getElementById('logout').submit()}"><strong><i class="fas fa-sign-out-alt px-2"></i> Logout</strong></a>
+                <form action="{% url 'logout' %}" method="post" id="logout">
+                  {% csrf_token %}
+                  <input type="hidden">
+                </form>
+            </li>
             
         </ul>
         
