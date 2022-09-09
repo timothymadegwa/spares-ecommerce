@@ -16,7 +16,12 @@ def home(request):
     return render(request, 'spares/home.html', context)
 
 def cart(request):
-    return render(request, 'spares/cart.html')
+    cart_items = Cart.objects.filter(user = request.user, is_ordered = False)
+    context = {
+        "inventory" : cart_items,
+        "count" : len(cart_items)
+    }
+    return render(request, 'spares/cart.html', context)
 
 @csrf_exempt
 def update_item(request):
@@ -29,12 +34,17 @@ def update_item(request):
 
     if action == "add":
         cart_item.quantity = cart_item.quantity + 1
-    elif action == "remove":
+        cart_item.save()
+        return JsonResponse("Item was added", safe=False)
+    if action == "remove":
         cart_item.quantity = cart_item.quantity - 1
-    cart_item.save()
-    if cart_item.quantity <= 0:
+        cart_item.save()
+        if cart_item.quantity <= 0:
+            cart_item.delete()
+        return JsonResponse("Item was removed", safe=False)
+    if action == "delete":
         cart_item.delete()
-    return JsonResponse("Item was added", safe=False)
+        return JsonResponse("Item was deleted", safe=False)
 
 def checkout(request):
     return render(request, 'spares/checkout.html')

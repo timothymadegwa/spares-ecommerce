@@ -29,8 +29,7 @@ class Inventory(models.Model):
     discount = models.FloatField(blank=False, null=False, default=0)
     photo = models.ImageField(upload_to='photos/spares')
            
-    class Meta:
-            
+    class Meta:  
         verbose_name = 'inventory'
         verbose_name_plural = 'inventory'
     
