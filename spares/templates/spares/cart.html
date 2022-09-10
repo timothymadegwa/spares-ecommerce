@@ -28,14 +28,14 @@
                 <td>{{ inv.item.discount }}</td>
                 <td>{{ inv.item.selling_price }}</td>
                 <td><span class="row">{{ inv.quantity }}<button class="col-4 btn alert-success btn-outline-success update-cart" data-product="{{inv.item.id}}" data-action="add">+</button><button class="col-4 btn alert-danger btn-outline-danger update-cart" data-product="{{inv.item.id}}" data-action="remove">-</button></span></td>
-                <td>{{ inv.item_total }}</td>
+                <td class="item-total">{{ inv.item_total }}</td>
                 <td><button class="btn alert-danger btn-outline-danger rounded-pill update-cart" data-product="{{inv.item.id}}" data-action="delete">Remove</button></td>
             </tr>
             {% endfor %}
             </tbody>
         </table>
         <div class="text-center">
-            <h5>Your Total is KES 1480</h5><br>
+            <h5>Your Total is KES <span id="total"></span></h5><br>
             <a href="{% url 'checkout' %}" class="btn alert-success btn-outline-success rounded-pill">Proceed to checkout</a>
 
         </div>
@@ -49,5 +49,6 @@
     {% endif %}
     
 </div>
+<script type="text/javascript" src="{% static 'js/cartTotal.js' %}"></script>
 
 {% endblock content %}
