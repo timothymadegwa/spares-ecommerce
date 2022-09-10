@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
+from django.db.models import Sum
 from django.http import JsonResponse
 import json
 from .models import *
@@ -17,9 +18,12 @@ def home(request):
 
 def cart(request):
     cart_items = Cart.objects.filter(user = request.user, is_ordered = False)
+    count= sum(cart_items.values_list('quantity', flat=True))
+    #print(total)
     context = {
         "inventory" : cart_items,
-        "count" : len(cart_items)
+        "count" : count,
+        #"total" : total
     }
     return render(request, 'spares/cart.html', context)
 

@@ -41,14 +41,7 @@ class Inventory(models.Model):
         if self.has_discount:
             return self.price - self.discount
         return self.price
-'''
-    @property
-    def quantity_sold(self):
-        saleitems = self.saleitem_set.all()
-        total = 0
-        for item in saleitems:
-            total += item.quantity_sold
-'''
+
 class Cart(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     quantity = models.IntegerField(null=False, blank=False, default=0)
@@ -57,3 +50,7 @@ class Cart(models.Model):
 
     def __str__(self):
         return self.user.email
+
+    @property
+    def item_total(self):
+        return self.item.selling_price * self.quantity
