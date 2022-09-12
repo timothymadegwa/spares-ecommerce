@@ -31,7 +31,7 @@ def login(request):
                 if not User.objects.filter(email=email).exists():
                     message = 'User does not exist!'
                     messages.error(request, message)
-                    return render(request, 'spares/login.html')
+                    return render(request, 'accounts/login.html')
 
                 user = auth.authenticate(email=email, password=password)
 
@@ -46,8 +46,8 @@ def login(request):
                 failed_login.save()
                 message = 'Invalid credentials. Enter correct username and password'
                 messages.error(request, message)
-                return render(request, 'spares/login.html')
-        return render(request, 'spares/login.html')
+                return render(request, 'accounts/login.html')
+        return render(request, 'accounts/login.html')
 
 
 def register(request):
@@ -63,7 +63,7 @@ def register(request):
             else:
                 message = "You did not accept the Terms and Conditions"
                 messages.error(request, message)
-                return render(request, 'spares/login.html')
+                return render(request, 'accounts/login.html')
 
             form = RegistrationForm(request.POST)
             if form.is_valid():
@@ -76,38 +76,38 @@ def register(request):
             else:
                 message = "Please fill in all the fields"
                 messages.error(request, message)
-                return render(request, 'spares/login.html')
+                return render(request, 'accounts/login.html')
 
             if password == confirm_password:
                 if len(password) < 8:
                     message = "Kindly ensure that your password is 8 characters or more"
                     messages.error(request, message)
-                    return render(request, 'spares/login.html', context)
+                    return render(request, 'accounts/login.html', context)
 
                 if similar(password, f_name) > 0.49:
                     message = "Password is too similar to your First Name"
                     messages.error(request, message)
-                    return render(request, 'spares/login.html', context)
+                    return render(request, 'accounts/login.html', context)
 
                 if similar(password, l_name) > 0.49:
                     message = "Password is too similar to your Last Name"
                     messages.error(request, message)
-                    return render(request, 'spares/login.html', context)
+                    return render(request, 'accounts/login.html', context)
 
                 if similar(password, email) > 0.49:
                     message = "Password is too similar to your E-mail address"
                     messages.error(request, message)
-                    return render(request, 'spares/login.html', context)
+                    return render(request, 'accounts/login.html', context)
 
                 if not validate_email(email):
                     message = 'The Email format is wrong'
                     messages.error(request, message)
-                    return render(request, 'spares/login.html', context)
+                    return render(request, 'accounts/login.html', context)
 
                 if User.objects.filter(email=email).exists():
                     message = 'The Email address already has an existing account'
                     messages.error(request, message)
-                    return render(request, 'spares/login.html', context)
+                    return render(request, 'accounts/login.html', context)
                     
                 else:
                     user = User.objects.create_user(first_name=f_name, last_name=l_name, email=email, phone=phone, password=password)
@@ -117,7 +117,7 @@ def register(request):
                     context = { 'user' : user,
                                 'domain' : current_site.domain,
                                 }
-                    email_body = render_to_string('spares/email.html', context)
+                    email_body = render_to_string('accounts/email.html', context)
                     mail = EmailMessage(
                         email_subject,
                         email_body,
@@ -131,8 +131,8 @@ def register(request):
             else:
                 message = 'Passwords do not match'
                 messages.error(request, message)
-                return render(request, 'spares/login.html', context)
-        return render(request, 'spares/login.html')
+                return render(request, 'accounts/login.html', context)
+        return render(request, 'accounts/login.html')
 
 def logout(request):
     if request.method == "POST":
