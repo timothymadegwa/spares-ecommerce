@@ -16,6 +16,13 @@ def home(request):
     }
     return render(request, 'spares/home.html', context)
 
+def spares(request):
+    inventory = Inventory.objects.filter(is_displayed=True, quantity__gt=0).order_by('name')
+    context = {
+        'inventory' : inventory,
+    }
+    return render(request, 'spares/spares.html', context)
+
 def cart(request):
     cart_items = Cart.objects.filter(user = request.user, is_ordered = False)
     count= sum(cart_items.values_list('quantity', flat=True))
@@ -54,17 +61,12 @@ def checkout(request):
 
     cart_items = Cart.objects.filter(user = request.user, is_ordered = False)
     count = sum(cart_items.values_list('quantity', flat=True))
-    
+
     context = {
         "inventory" : cart_items,
         "count" : count,
     }
     return render(request, 'spares/checkout.html', context)
 
-def spares(request):
-    inventory = Inventory.objects.filter(is_displayed=True, quantity__gt=0).order_by('name')
-    context = {
-        'inventory' : inventory,
-    }
-    return render(request, 'spares/spares.html', context)
+
 
