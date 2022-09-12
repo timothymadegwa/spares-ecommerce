@@ -19,11 +19,9 @@ def home(request):
 def cart(request):
     cart_items = Cart.objects.filter(user = request.user, is_ordered = False)
     count= sum(cart_items.values_list('quantity', flat=True))
-    #print(total)
     context = {
         "inventory" : cart_items,
         "count" : count,
-        #"total" : total
     }
     return render(request, 'spares/cart.html', context)
 
@@ -51,7 +49,17 @@ def update_item(request):
         return JsonResponse("Item was deleted", safe=False)
 
 def checkout(request):
-    return render(request, 'spares/checkout.html')
+    if request.method == "POST":
+        pass
+
+    cart_items = Cart.objects.filter(user = request.user, is_ordered = False)
+    count = sum(cart_items.values_list('quantity', flat=True))
+    
+    context = {
+        "inventory" : cart_items,
+        "count" : count,
+    }
+    return render(request, 'spares/checkout.html', context)
 
 def spares(request):
     inventory = Inventory.objects.filter(is_displayed=True, quantity__gt=0).order_by('name')

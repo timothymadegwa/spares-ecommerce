@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils import timezone
 
 from accounts.models import User
 
@@ -49,8 +50,46 @@ class Cart(models.Model):
     is_ordered = models.BooleanField(default=False)
 
     def __str__(self):
-        return self.user.email
+        return str(self.item)
 
     @property
     def item_total(self):
         return self.item.selling_price * self.quantity
+
+class Shipping(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    shipping_name = models.CharField(max_length=255, blank=False, null=False)
+    phone_number = models.CharField(max_length=50, null=False, blank=False)
+    region = models.CharField(max_length=50, null=False, blank=False)
+    shipping_location = models.CharField(max_length=255, blank=False, null=False)
+
+    def __str__(self):
+        return self.user.email
+
+    @property
+    def shipping_fee(self):
+        pass
+
+class Order(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    items = models.ManyToManyField("Cart")
+    order_date = models.DateTimeField(default=timezone.now)
+    payment_method = models.CharField(max_length=100, blank=False, null=False)
+    paid = models.BooleanField(default=False)
+    delivered = models.BooleanField(default=False)
+    delivery_date = models.DateTimeField(blank=True, null=True)
+    shipping_details = models.ForeignKey(Shipping, on_delete=models.CASCADE)
+    
+    def __str__(self):
+        return self.user.email
+
+    @property
+    def item_total(self):
+        total = 0
+        for order_item in self.items.all():
+            total += order_item.item_total
+        return total
+
+    @property
+    def order_total(self):
+        return self.item_total + self.shipping_fee

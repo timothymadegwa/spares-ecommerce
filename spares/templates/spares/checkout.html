@@ -7,7 +7,7 @@
     <a href="{% url 'cart' %}" class="rounded-circle btn btn-sm btn-dark" id="feedback" >
         <i class="fas fa-shopping-cart"></i><p style="font-size: small;">Cart</p>
     </a>
-    <h5>Hello Kiprotich, You are about to checkout 4 items</h5><hr>
+    <h5>Hello {{ user.first_name }}, You have {{count}} item(s) in your cart</h5><hr>
     <div class="table-responsive">
         <table class="table table-striped table-hover">
             <thead>
@@ -15,44 +15,24 @@
                 <th scope="col"></th>
                 <th scope="col">Description</th>
                 <th scope="col">Unit price</th>
+                <th scope="col">Discount/Unit</th>
+                <th scope="col">Selling Price</th>
                 <th scope="col">Quantity</th>
-                <th scope="col">Discount</th>
                 <th scope="col">Item total</th>
             </tr>
             </thead>
             <tbody>
+            {% for inv in inventory %}
             <tr>
-                <td><img src="images/aaa.png" alt="item image" style="height: 100px; width: 150px;"></td>
-                <td>DENSO - SPARK PLUG (K20TR11)</td>
-                <td>KES 370</td>
-                <td>1</td>
-                <td>KES 0</td>
-                <td>KES 370</td>
+              <td><img src="{{inv.item.photo.url}}" alt="item image" style="height: 100px; width: 150px;"></td>
+              <td>{{ inv.item }}</td>
+              <td>{{ inv.item.price}}</td>
+              <td>{{ inv.item.discount }}</td>
+              <td>{{ inv.item.selling_price }}</td>
+              <td>{{ inv.quantity }}</td>
+              <td class="item-total">{{ inv.item_total }}</td>
             </tr>
-            <tr>
-                <td><img src="images/aaa.png" alt="item image" style="height: 100px; width: 150px;"></td>
-                <td>DENSO - SPARK PLUG (K20TR11)</td>
-                <td>KES 370</td>
-                <td>1</td>
-                <td>KES 0</td>
-                <td>KES 370</td>
-            </tr>
-            <tr>
-                <td><img src="images/aaa.png" alt="item image" style="height: 100px; width: 150px;"></td>
-                <td>DENSO - SPARK PLUG (K20TR11)</td>
-                <td>KES 370</td>
-                <td>1</td>
-                <td>KES 0</td>
-                <td>KES 370</td>
-            </tr>
-            <tr>
-                <td><img src="images/aaa.png" alt="item image" style="height: 100px; width: 150px;"></td>
-                <td>DENSO - SPARK PLUG (K20TR11)</td>
-                <td>KES 370</td>
-                <td>1</td>
-                <td>KES 0</td>
-                <td>KES 370</td>
-            </tr>
+          {% endfor %}
             </tbody>
         </table>
         <div class="text-center">
