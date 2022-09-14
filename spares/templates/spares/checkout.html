@@ -36,6 +36,7 @@
             <h5>Your Total is KES <span id="total"></span></h5><br>
 
             <form class="col-md-12 float-center shadow-lg" action="{% url 'login' %}" method="post" autocomplete="off">
+              {% csrf_token %}
                 <div class="text-center text-danger">
                     <br><h3>Billing Address</h3><hr>
                 </div>
@@ -59,7 +60,7 @@
                 <label for="location_details"> <i class="fas fa-location-arrow"></i> Location Details</label>
               </div>                  
               <div class="text-center">
-                <button type="submit" class="btn alert-dark btn-outline-dark rounded-pill col-4">Checkout </button><br><br>
+                <button type="submit" class="btn alert-dark btn-outline-dark rounded-pill col-4" onclick="return confirm('Are you sure you want to confirm this order?');">Confirm Order</button><br><br>
               </div><br>
             </form>
         </div>
