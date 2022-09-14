@@ -1,4 +1,3 @@
-from unicodedata import category
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
@@ -12,7 +11,7 @@ from .models import *
 
 # @login_required(login_url='login')
 def home(request):
-    inventory = Inventory.objects.filter(is_displayed=True, quantity__gt=0).order_by('name')
+    inventory = Inventory.objects.filter(is_displayed=True, quantity__gt=0).order_by('?')
     count = Cart.cart_count(user_id=request.user.id)
     context = {
         'inventory' : inventory,
@@ -41,7 +40,7 @@ def inventory(request, id):
     return render(request, 'spares/inventory.html', context)
 
 def cart(request):
-    cart_items = Cart.objects.filter(user = request.user, is_ordered = False)
+    cart_items = Cart.objects.filter(user = request.user, is_ordered = False).order_by("-id")
     count= Cart.cart_count(user_id=request.user.id)
     context = {
         "inventory" : cart_items,
@@ -78,7 +77,7 @@ def checkout(request):
     if request.method == "POST":
         pass
 
-    cart_items = Cart.objects.filter(user = request.user, is_ordered = False)
+    cart_items = Cart.objects.filter(user = request.user, is_ordered = False).order_by("-id")
     count = sum(cart_items.values_list('quantity', flat=True))
 
     context = {
