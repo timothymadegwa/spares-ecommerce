@@ -17,11 +17,11 @@
                 <label for="email"> <i class="fas fa-envelope px-2" aria-hidden="true"></i> E-Mail</label>
               </div>
               <div class="form-floating mx-3">
-                <input type="password" class="form-control rounded-pill" id="password" name="password" placeholder="Password"  autocomplete="off" required>
+                <input type="password" class="form-control rounded-pill" id="login-password" name="password" placeholder="Password"  autocomplete="off" required>
                 <label for="password"><i class="fas fa-key px-2"></i> Password</label>
               </div><br>
               <div class="form-check mb-3 mx-3">
-                <input class="form-check-input" type="checkbox" id="show_password" onclick="showPassword()">
+                <input class="form-check-input" type="checkbox" id="show_password" onclick="showPassword('login-password')">
                 <label class="form-check-label" for="show_password">Show Password</label>
               </div><br>
                   
@@ -66,7 +66,7 @@
                 <label for="phone"><i class="fas fa-phone px-2"></i> Phone Number (<small>Format: 254712XXXXXX</small>)</label>
               </div>                
               <div class="form-floating mx-3">
-                <input type="password" class="form-control rounded-pill" id="password" name="password" placeholder="Password"  autocomplete="off" required>
+                <input type="password" class="form-control rounded-pill" id="register-password" name="password" placeholder="Password"  autocomplete="off" required>
                 <label for="password"><i class="fas fa-key px-2"></i> Password</label>
               </div><br>
               <div class="form-floating mx-3">
@@ -74,12 +74,12 @@
                 <label for="password2"><i class="fas fa-key px-2"></i> Confirm Password</label>
               </div><br>
               <div class="form-check mb-3 mx-3">
-                <input class="form-check-input" type="checkbox" id="show_password" onclick="showPassword()">
+                <input class="form-check-input" type="checkbox" id="show_password" onclick="showPassword('register-password')">
                 <label class="form-check-label" for="show_password">Show Password</label>
               </div>
               <div class="form-check mb-3 mx-3">
                 <input class="form-check-input" type="checkbox" name="tac" id="check-box" required>
-                <label class="form-check-label" for="check-box">I have read, understood and agreed to the terms and conditions of S-BOB Sacco</label>
+                <label class="form-check-label" for="check-box">I have read, understood and agreed to the terms and conditions of Spares Shop KE</label>
                 <p class="text-center"><a target="_blank" href="#">Terms and Conditions</a></p>
               </div><br>
                   
@@ -90,4 +90,14 @@
           </div>
         </div><br><br><br><br>
     </div>
+    <script>
+      function showPassword(logInPassword) {
+      var x = document.getElementById(logInPassword);
+      if (x.type === "password") {
+        x.type = "text";
+      } else {
+        x.type = "password";
+      }
+    }
+    </script>
     {% endblock content %}

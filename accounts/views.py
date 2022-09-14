@@ -4,6 +4,7 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.template.loader import render_to_string
 from django.core.mail import EmailMessage
 from .models import User, FailedLogin
+from spares.models import Cart
 from accounts.forms import LoginForm, RegistrationForm
 from django.conf import settings
 
@@ -133,6 +134,13 @@ def register(request):
                 messages.error(request, message)
                 return render(request, 'accounts/login.html', context)
         return render(request, 'accounts/login.html')
+
+def profile(request):
+    count = Cart.cart_count(user_id=request.user.id)
+    context = {
+        "count" : count
+    }
+    return render(request, "accounts/profile.html", context)
 
 def logout(request):
     if request.method == "POST":

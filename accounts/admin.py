@@ -1,7 +1,14 @@
 from django.contrib import admin
-from accounts.models import FailedLogin
+from accounts.models import FailedLogin, User
 
 # Register your models here.
+class UserAdmin(admin.ModelAdmin):
+    list_display = ('id','email', 'phone', 'dob')
+    list_display_links = ('id','email')
+    search_fields = ('email',)
+
+admin.site.register(User, UserAdmin)
+
 class FailedLoginAdmin(admin.ModelAdmin):
     list_display = ('id','user', 'date', 'reason')
     list_display_links = ('id','user')
