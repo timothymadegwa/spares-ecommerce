@@ -6,9 +6,7 @@
 
     <div class="container">
       {% include '_partials/messages.html'%}
-      <a href="{% url 'cart' %}" class="rounded-circle btn btn-sm btn-dark" id="feedback" >
-        <i class="fas fa-shopping-cart"></i><p style="font-size: small;">Cart</p>
-      </a>
+      {% include '_partials/cart_button.html'%}
         <div class="row">
             <div class="col-md-2">
 

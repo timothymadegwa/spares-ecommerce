@@ -61,6 +61,12 @@ class Cart(models.Model):
     def item_total(self):
         return self.item.selling_price * self.quantity
 
+    @classmethod
+    def cart_count(cls, user_id):
+        items = cls.objects.filter(user = user_id, is_ordered = False)
+        count= sum(items.values_list('quantity', flat=True))
+        return int(count)
+
 class Shipping(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     shipping_name = models.CharField(max_length=255, blank=False, null=False)

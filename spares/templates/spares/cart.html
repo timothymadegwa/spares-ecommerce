@@ -4,6 +4,7 @@
 {% block title %} | Home {% endblock %}
 {% block content %}
 <div class="container">
+    {% include '_partials/messages.html'%}
     <h5>Hello {{ user.first_name }}, You have {{count}} item(s) in your cart</h5><hr>
     {% if inventory %}
     <div class="table-responsive">

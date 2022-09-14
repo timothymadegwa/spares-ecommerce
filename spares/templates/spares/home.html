@@ -5,9 +5,7 @@
 {% block content %}
 <div class="container">
   {% include '_partials/messages.html'%}
-  <a href="{% url 'cart' %}" class="rounded-circle btn btn-sm btn-dark" id="feedback" >
-    <i class="fas fa-shopping-cart"></i><p style="font-size: small;">Cart</p>
-  </a>
+  {% include '_partials/cart_button.html'%}  
     
     <div id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel">
         <div class="carousel-indicators">

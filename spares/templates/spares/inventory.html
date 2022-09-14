@@ -5,9 +5,7 @@
 {% block content %}
 <div class="container">
     {% include '_partials/messages.html'%}
-  <a href="{% url 'cart' %}" class="rounded-pill btn btn-sm btn-dark" id="feedback" >
-    <i class="fas fa-shopping-cart"></i><p style="font-size: small;">Cart</p>
-  </a>
+    {% include '_partials/cart_button.html'%}
     <div>
         <div class="row">
             <div class="col-md-6">
@@ -50,6 +48,13 @@
                 </table>
             </div>
         </div>
+    </div>
+    <div class="row">
+        <h3 class="text-danger">RELATED PRODUCTS</h3><hr>
+        {% for inv in inventory %}
+          {% include '_partials/item.html'%}
+        {% endfor %} 
+
     </div>
     <br><br><br><br>
 </div>
