@@ -1,8 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 from django.db.models import Sum
 from django.http import JsonResponse
+from django.contrib import messages
 import json
 from .models import *
 
@@ -22,6 +23,13 @@ def spares(request):
         'inventory' : inventory,
     }
     return render(request, 'spares/spares.html', context)
+
+def inventory(request, id):
+    item = get_object_or_404(Inventory, id=id)
+    context = {
+        "item" : item,
+    }
+    return render(request, 'spares/inventory.html', context)
 
 def cart(request):
     cart_items = Cart.objects.filter(user = request.user, is_ordered = False)
@@ -44,15 +52,21 @@ def update_item(request):
     if action == "add":
         cart_item.quantity = cart_item.quantity + 1
         cart_item.save()
+        message = "Item was added to your cart"
+        messages.info(request, message)
         return JsonResponse("Item was added", safe=False)
     if action == "remove":
         cart_item.quantity = cart_item.quantity - 1
         cart_item.save()
         if cart_item.quantity <= 0:
             cart_item.delete()
+            message = "Item was removed from your cart"
+            messages.success(request, message)
         return JsonResponse("Item was removed", safe=False)
     if action == "delete":
         cart_item.delete()
+        message = "Item was removed from your cart"
+        messages.success(request, message)
         return JsonResponse("Item was deleted", safe=False)
 
 def checkout(request):

@@ -2,11 +2,18 @@
     <div class="card mb-4 shadow-sm">
         <img src="{{inv.photo.url}}" height="200" width="100%"/>
       <div class="card-body">
-        <p class="card-text">{{inv.name}} pp</p>
-        <p>KES {{inv.price}} </p>
+        <p class="card-text">{{inv.name}}</p>
+        {% if inv.has_discount %}
+        <p><s class="text-danger">KES {{inv.price}}</s> KES {{inv.selling_price}}</p>
+        {% else %}
+        <p>KES {{inv.price}}</p>
+        {% endif %}
         <div class="d-flex justify-content-between align-items-center">
           <div class="btn-group">
             <button data-product="{{inv.id}}" data-action="add" class="btn btn-md alert-dark btn-outline-danger rounded-pill update-cart"><i class="fas fa-shopping-cart"></i> Add to cart</button>
+          </div>
+          <div class="btn-group">
+            <a href="{% url 'inventory' inv.id %}" role="button" class="btn btn-md alert-dark btn-outline-danger rounded-pill">View Item</a>
           </div>
         </div>
       </div>

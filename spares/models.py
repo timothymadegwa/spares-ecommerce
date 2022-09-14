@@ -23,6 +23,7 @@ class Inventory(models.Model):
     name = models.CharField(max_length=100, unique=True)
     brand = models.ForeignKey(Brand, on_delete=models.CASCADE)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    description = models.TextField(null=False)
     quantity = models.PositiveIntegerField(default=0, blank=False, null=False)
     price = models.FloatField(null=False, blank=False)
     is_displayed = models.BooleanField(default=True)
@@ -42,6 +43,10 @@ class Inventory(models.Model):
         if self.has_discount:
             return self.price - self.discount
         return self.price
+    @property
+    def percentage_discount(self):
+        return round((self.discount/self.price)*100 ,2)
+    
 
 class Cart(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
