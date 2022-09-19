@@ -7,6 +7,7 @@ from django.contrib import messages
 import json
 from accounts.forms import ShippingForm
 from .models import *
+from helpers import send_mail
 
 # Create your views here.
 
@@ -96,6 +97,9 @@ def checkout(request):
         order.items.add(*cart_items)
         order.save()
         cart_items.update(is_ordered= True)
+        #send_mail([request.user.email],'Order Completed!', 'Thank you for ordering your spare parts with us. Kindly track your order though our website')
+        messages.success(request, "Your order has been placed")
+        return render(request, 'spares/success.html')
 
     cart_items = Cart.objects.filter(user = request.user, is_ordered = False).order_by("-id")
     count = sum(cart_items.values_list('quantity', flat=True))

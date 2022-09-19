@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} | Success {% endblock %}
+{% block content %}
+<div class="container text-center"><br><br><br>
+    {% include '_partials/messages.html'%}
+  <br>
+    <div class="row">
+        <div class="col-md-3">
+
+        </div>
+        <div class="col-md-6 shadow-lg"><br>
+            <img class="img-fluid" src="{% static 'images/logo.png'%}" width="300" height="200"/><hr>
+            <h1 class="text-success"><i class="fas fa-check-circle px-2"></i> SUCCESS!</h1><br>
+                <p class="text-success">Your request was processed successfully!</p><br>
+        </div>
+        <div class="col-md-3">
+            
+        </div>
+    </div><br><br>
+        
+    </div>
+    
+    
+</div>
+
+{% endblock content %}
