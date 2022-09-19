@@ -23,8 +23,20 @@
               <td>{{ inv.id }}</td>
               <td>{{ inv.order_date }}</td>
               <td>KES {{ inv.order_total | intcomma}}</td>
-              <td>{{ inv.paid }}</td>
-              <td>{{ inv.delivered }}</td>
+              <td>
+                {% if inv.paid %}
+                <i class="text-success fas fa-check-circle px-2"></i>
+                {% else %}
+                <i class="text-danger fas fa-exclamation-circle px-2"></i>
+                {% endif %}
+              </td>
+              <td>
+                {% if inv.delivered %}
+                <i class="text-success fas fa-check-circle px-2"></i>
+                {% else %}
+                <i class="text-danger fas fa-exclamation-circle px-2"></i>
+                {% endif %}
+              </td>
               <td><a href="{% url 'order' inv.id %}" class="btn alert-danger btn-outline-danger rounded-pill">View</a></td>
             </tr>
           {% endfor %}

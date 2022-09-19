@@ -123,7 +123,7 @@ def orders(request):
 def order(request, id):
     order = get_object_or_404(Order, id=id)
     context = {
-        "order" : order,
+        "orders" : order,
     }
     return render(request, 'spares/order.html', context)
 
