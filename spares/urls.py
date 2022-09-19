@@ -8,5 +8,7 @@ urlpatterns = [
     path('spares', views.spares, name = 'spares'),
     path('update_item', views.update_item, name='update_item'),
     path('inventory/<int:id>', views.inventory, name='inventory'),
+    path('orders', views.orders, name='orders'),
+    path('order/<int:id>', views.order, name='order'),
 
 ]

@@ -32,7 +32,7 @@ def spares(request):
 
 def inventory(request, id):
     item = get_object_or_404(Inventory, id=id)
-    inventory = Inventory.objects.filter(category=item.category).order_by('?').exclude(id=item.pk)
+    inventory = Inventory.objects.filter(category=item.category).order_by('?').exclude(id=item.pk)[:3]
     count = Cart.cart_count(user_id=request.user.id) 
     context = {
         "item" : item,
@@ -113,5 +113,18 @@ def checkout(request):
     messages.error(request, "You cannot view this page!")
     return redirect("home")
 
+def orders(request):
+    orders = Order.objects.filter(user = request.user).order_by("-id")
+    context = {
+        "inventory" : orders
+    }
+    return render(request, 'spares/orders.html', context)
+
+def order(request, id):
+    order = get_object_or_404(Order, id=id)
+    context = {
+        "order" : order,
+    }
+    return render(request, 'spares/order.html', context)
 
 

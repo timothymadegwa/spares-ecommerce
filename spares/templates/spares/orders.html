@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+{% block title %} | Orders {% endblock %}
+
+{% block content %}
+<div class="container text-center "><br>
+    {% if inventory %}
+    <div class="table-responsive">
+        <table class="table table-striped table-hover">
+            <thead>
+            <tr>
+                <th scope="col">Order ID</th>
+                <th scope="col">Order Date</th>
+                <th scope="col">Order Total</th>
+                <th scope="col">Paid</th>
+                <th scope="col">Delivered</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for inv in inventory %}
+            <tr>
+              <td>{{ inv.id }}</td>
+              <td>{{ inv.order_date }}</td>
+              <td>KES {{ inv.order_total | intcomma}}</td>
+              <td>{{ inv.paid }}</td>
+              <td>{{ inv.delivered }}</td>
+              <td><a href="{% url 'order' inv.id %}" class="btn alert-danger btn-outline-danger rounded-pill">View</a></td>
+            </tr>
+          {% endfor %}
+         
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <h3>You have not placed any orders</h3>
+    {% endif %}
+    
+    
+</div><br><br><br>
+
+{% endblock content %}
