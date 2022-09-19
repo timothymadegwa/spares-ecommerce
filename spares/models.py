@@ -79,7 +79,7 @@ class Shipping(models.Model):
 
     @property
     def shipping_fee(self):
-        pass
+        return 200.0
 
 class Order(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -103,4 +103,14 @@ class Order(models.Model):
 
     @property
     def order_total(self):
-        return self.item_total + self.shipping_fee
+        return self.item_total + self.shipping_details.shipping_fee
+
+    @classmethod
+    def order_count(cls, user_id):
+        orders = cls.objects.filter(user=user_id)
+        return len(orders)
+
+    @classmethod
+    def delivered_orders(cls, user_id):
+        orders = cls.objects.filter(user=user_id, delivered = True)
+        return len(orders)

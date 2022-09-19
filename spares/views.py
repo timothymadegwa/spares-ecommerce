@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 from django.db.models import Sum
@@ -102,13 +102,16 @@ def checkout(request):
         return render(request, 'spares/success.html')
 
     cart_items = Cart.objects.filter(user = request.user, is_ordered = False).order_by("-id")
-    count = sum(cart_items.values_list('quantity', flat=True))
+    if cart_items:
+        count = sum(cart_items.values_list('quantity', flat=True))
 
-    context = {
-        "inventory" : cart_items,
-        "count" : count,
-    }
-    return render(request, 'spares/checkout.html', context)
+        context = {
+            "inventory" : cart_items,
+            "count" : count,
+        }
+        return render(request, 'spares/checkout.html', context)
+    messages.error(request, "You cannot view this page!")
+    return redirect("home")
 
 
 
