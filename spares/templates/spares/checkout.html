@@ -31,7 +31,7 @@
             </tr>
           {% endfor %}
           <tr>
-            <th colspan="6">Shipping fee</th>
+            <th colspan="6">Shipping Fee</th>
             <td class="item-total">200.0</td>
           </tr>
             </tbody>
@@ -40,28 +40,28 @@
     <div class="text-center">
         <h5>Your Total is KES <span id="total"></span></h5><br>
 
-        <form class="col-md-12 float-center shadow-lg" action="{% url 'login' %}" method="post" autocomplete="off">
+        <form class="col-md-12 float-center shadow-lg" action="{% url 'checkout' %}" method="post" autocomplete="off">
               {% csrf_token %}
                 <div class="text-center text-danger">
                     <br><h3>Billing Address</h3><hr>
                 </div>
               <div class="form-floating mb-3 mx-3">
-                <input type="text" class="form-control rounded-pill" id="name" name="name" placeholder='Enter your Full Name' maxlength="20" required>
+                <input type="text" class="form-control rounded-pill" id="name" name="shipping_name" placeholder='Enter your Full Name' maxlength="50" required>
                 <label for="name"> <i class="fas fa-user px-2" aria-hidden="true"></i> Full Name</label>
               </div>
               <div class="form-floating mb-3 mx-3">
-                <input type="tel" class="form-control rounded-pill" id="phone" name="phone" pattern="[0-9]{12}" placeholder="Phone Number" value="{{values.phone}}" required>
+                <input type="tel" class="form-control rounded-pill" id="phone" name="phone_number" pattern="[0-9]{12}" placeholder="Phone Number" value="{{values.phone}}" required>
                 <label for="phone"><i class="fas fa-phone px-2"></i> Phone Number (<small>Format: 254712XXXXXX</small>)</label>
               </div> 
               <div class="form-floating mx-3">
-                <select class="form-select form-control me-2 rounded-pill" id="region" aria-label="Default select example">
+                <select class="form-select form-control me-2 rounded-pill" id="region" name="region" aria-label="Default select example">
                     <option value="1">Nairobi</option>
                     <option value="2">Eldoret</option>
                 </select>
               <label for="password">Region</label>
               </div><br>
               <div class="form-floating mb-3 mx-3">
-                <input type="text" class="form-control rounded-pill" id="location_details" name="Location_details" placeholder='Enter your location details' maxlength="255" required>
+                <input type="text" class="form-control rounded-pill" id="location_details" name="shipping_location" placeholder='Enter your location details' maxlength="255" required>
                 <label for="location_details"> <i class="fas fa-location-arrow"></i> Location Details</label>
               </div>                  
               <div class="text-center">

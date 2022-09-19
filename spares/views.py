@@ -5,6 +5,7 @@ from django.db.models import Sum
 from django.http import JsonResponse
 from django.contrib import messages
 import json
+from accounts.forms import ShippingForm
 from .models import *
 
 # Create your views here.
@@ -75,7 +76,26 @@ def update_item(request):
 
 def checkout(request):
     if request.method == "POST":
-        pass
+        form = ShippingForm(request.POST)
+        if form.is_valid():
+            shipping_name = form.cleaned_data['shipping_name']
+            phone = form.cleaned_data['phone_number']
+            region = form.cleaned_data['region']
+            location = form.cleaned_data['shipping_location']
+        else:
+            print(form.errors)
+            message = "Please fill in all the fields"
+            messages.error(request, message)
+            return render(request, 'spares/checkout.html')
+        shipping = Shipping(user = request.user, shipping_name = shipping_name, phone_number = phone,
+                            region = region, shipping_location = location )
+        shipping.save()
+        cart_items = Cart.objects.filter(user = request.user, is_ordered = False)
+        order = Order(user = request.user, shipping_details = shipping)
+        order.save()
+        order.items.add(*cart_items)
+        order.save()
+        cart_items.update(is_ordered= True)
 
     cart_items = Cart.objects.filter(user = request.user, is_ordered = False).order_by("-id")
     count = sum(cart_items.values_list('quantity', flat=True))
