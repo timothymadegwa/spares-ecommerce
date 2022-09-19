@@ -30,12 +30,17 @@
               <td class="item-total">{{ inv.item_total }}</td>
             </tr>
           {% endfor %}
+          <tr>
+            <th colspan="6">Shipping fee</th>
+            <td class="item-total">200.0</td>
+          </tr>
             </tbody>
         </table>
-        <div class="text-center">
-            <h5>Your Total is KES <span id="total"></span></h5><br>
+    </div>
+    <div class="text-center">
+        <h5>Your Total is KES <span id="total"></span></h5><br>
 
-            <form class="col-md-12 float-center shadow-lg" action="{% url 'login' %}" method="post" autocomplete="off">
+        <form class="col-md-12 float-center shadow-lg" action="{% url 'login' %}" method="post" autocomplete="off">
               {% csrf_token %}
                 <div class="text-center text-danger">
                     <br><h3>Billing Address</h3><hr>
@@ -63,13 +68,13 @@
                 <button type="submit" class="btn alert-dark btn-outline-dark rounded-pill col-4" onclick="return confirm('Are you sure you want to confirm this order?');">Confirm Order</button><br><br>
               </div><br>
             </form>
-        </div>
+    </div>
 
         
         <br><br><br>
-    </div>
-    
 </div>
+    
+
 <script type="text/javascript" src="{% static 'js/cartTotal.js' %}"></script>
 
 {% endblock content %}
