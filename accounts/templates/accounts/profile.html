@@ -45,7 +45,7 @@
             {% else %}
             <div class="text-center">
               <img class="featurette-image mx-auto m-3 img-thumbnail rounded-circle" src="{% static 'images/user.png'%}" alt="Profile photo" loading="lazy" height="200" width="300"><br>
-              <br><h5>{{ user.first_name }} {{ user.last_name }} <br> {{ user.email }}</h5><br>
+              <br><h5>{{ user.first_name }} {{ user.last_name }} </h5><br>
             </div>
             {% endif %}
             
@@ -59,14 +59,13 @@
               <div class="col-lg-6"><br>
                 <p>Full Name : {{ user.first_name }} {{ user.last_name }}</p>
                 <p>Date of Birth : {{ user.dob }}</p> 
-              </div>
-              <div class="col-lg-6"><br>
                 <p>Email : {{ user.email }}</p>
                 <p>Phone : +{{ user.phone }}</p>
               </div>
-            </div><hr>
-            <div class="text-center">
-              <a href="#" class="btn alert-dark btn-outline-dark rounded-pill col-6 mb-3">Edit Profile</a>
+              <div class="col-lg-6"><br>
+                <p><a href="#" class="btn alert-dark btn-outline-dark rounded-pill col-6 mb-3">Edit Profile</a></p>
+                <p><a href="#" class="btn alert-dark btn-outline-dark rounded-pill col-6 mb-3">Change Password</a></p>
+              </div>
             </div><br>
           </div>
           
