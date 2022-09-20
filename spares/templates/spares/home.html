@@ -60,18 +60,25 @@
         <div class="col mb-3 p-2">
             <div class="card shadow h-100">
               <div class="card-body">
-                <i class="fas fa-car fa-3x " aria-hidden="true"></i> <i class="fas fa-money-bill fa-3x" aria-hidden="true"></i>
-                <a href="#" class="stretched-link"><h5 class="card-title"><br>BUY A VEHICLE</h5></a>
+                <i class="fas fa-car fa-3x" aria-hidden="true"></i> <i class="fas fa-plus fa-3x px-2" aria-hidden="true"></i>
+                <a href="{% url 'accessories' %}" class="stretched-link"><h5 class="card-title"><br>BUY ACCESSORIES</h5></a>
               </div>
             </div>
         </div>
     </div><br><br><br>
     <div class="row">
         <h3 class="text-danger">FEATURED SPARE PARTS</h3><hr>
-        {% for inv in inventory %}
+        {% for inv in spares %}
           {% include '_partials/item.html'%}
         {% endfor %} 
 
-    </div><br><br><br><br>
+    </div><br>
+    <div class="row">
+      <h3 class="text-danger">FEATURED ACCESSORIES</h3><hr>
+      {% for inv in accessories %}
+        {% include '_partials/item.html'%}
+      {% endfor %} 
+
+  </div><br><br><br><br>
 </div>
 {% endblock content %}

@@ -1,3 +1,4 @@
+from unicodedata import category
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
@@ -14,15 +15,27 @@ from helpers import send_mail
 # @login_required(login_url='login')
 def home(request):
     inventory = Inventory.objects.filter(is_displayed=True, quantity__gt=0).order_by('?')
+    spares = inventory.filter(category__category_name="Spare part")
+    accessories = inventory.filter(category__category_name="Accessory")
     count = Cart.cart_count(user_id=request.user.id)
     context = {
-        'inventory' : inventory,
+        'spares' : spares,
+        'accessories' : accessories,
         'count' : count,
     }
     return render(request, 'spares/home.html', context)
 
 def spares(request):
-    inventory = Inventory.objects.filter(is_displayed=True, quantity__gt=0).order_by('name')
+    inventory = Inventory.objects.filter(category__category_name="Spare part", is_displayed=True, quantity__gt=0).order_by('name')
+    count = Cart.cart_count(user_id=request.user.id)
+    context = {
+        'inventory' : inventory,
+        'count' : count,
+    }
+    return render(request, 'spares/spares.html', context)
+
+def accessories(request):
+    inventory = Inventory.objects.filter(category__category_name="Accessory", is_displayed=True, quantity__gt=0).order_by('name')
     count = Cart.cart_count(user_id=request.user.id)
     context = {
         'inventory' : inventory,
