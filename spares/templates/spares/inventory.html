@@ -10,6 +10,7 @@
         <div class="row">
             <div class="col-md-6">
                 <img src="{{item.photo.url}}" height="50%" width="100%"/><br><br>
+                <p>{{item.name}}</p>
                 {% if item.has_discount %}
                     <p>FROM <s class="text-danger">KES {{item.price | intcomma}}</s> TO KES {{item.selling_price | intcomma }}<br> A {{item.percentage_discount}}% savings!</p>
                 {% else %}

@@ -79,6 +79,13 @@
         {% include '_partials/item.html'%}
       {% endfor %} 
 
-  </div><br><br><br><br>
+  </div><br>
+  <div class="row">
+    <h3 class="text-danger">HOT DEALS!</h3><hr>
+    {% for inv in deals %}
+      {% include '_partials/item.html'%}
+    {% endfor %} 
+
+</div><br><br><br><br>
 </div>
 {% endblock content %}

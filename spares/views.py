@@ -18,10 +18,12 @@ def home(request):
     inventory = Inventory.objects.filter(is_displayed=True, quantity__gt=0).order_by('?')
     spares = inventory.filter(category__category_name="Spare part").order_by('?')[:3]
     accessories = inventory.filter(category__category_name="Accessory").order_by('?')[:3]
+    deals = inventory.filter(has_discount=True).order_by('?')[:3]
     count = Cart.cart_count(user_id=request.user.id)
     context = {
         'spares' : spares,
         'accessories' : accessories,
+        'deals' : deals,
         'count' : count,
     }
     return render(request, 'spares/home.html', context)
