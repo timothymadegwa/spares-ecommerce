@@ -1,7 +1,27 @@
-import imp
-from spares.models import Inventory
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from spares.models import Inventory, Cart
 import json
 
+def get_category(request, category_name):
+    if request.GET.get('search'):
+        search = request.GET.get('search')
+        inventory = Inventory.objects.filter(name__icontains=search, category__category_name= category_name) | Inventory.objects.filter(description__icontains=search, category__category_name=category_name)
+    else:
+        inventory = Inventory.objects.filter(category__category_name=category_name, is_displayed=True, quantity__gt=0)
+    count = Cart.cart_count(user_id=request.user.id)
+    p = Paginator(inventory, 30)
+    page_num = request.GET.get('page', 1)
+    try:
+        page = p.page(page_num)
+    except PageNotAnInteger:
+        page = p.page(1)
+    except EmptyPage:
+        page = p.page(1)
+    context = {
+        'inventory' : page,
+        'count' : count,
+    }
+    return context
 
 def cookie_cart(request):
     try:

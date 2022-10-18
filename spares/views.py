@@ -9,7 +9,7 @@ import json
 from accounts.forms import ShippingForm
 from .models import *
 from helpers import send_mail
-from .utils import cookie_cart
+from .utils import cookie_cart, get_category
 
 # Create your views here.
 
@@ -17,56 +17,31 @@ def home(request):
     inventory = Inventory.objects.filter(is_displayed=True, quantity__gt=0).order_by('?')
     spares = inventory.filter(category__category_name="Spare part").order_by('?')[:3]
     accessories = inventory.filter(category__category_name="Accessory").order_by('?')[:3]
+    tyres = inventory.filter(category__category_name="Tyre").order_by('?')[:3]
     deals = inventory.filter(has_discount=True).order_by('?')[:3]
     count = Cart.cart_count(user_id=request.user.id)
     context = {
         'spares' : spares,
         'accessories' : accessories,
+        'tyres' : tyres,
         'deals' : deals,
         'count' : count,
     }
     return render(request, 'spares/home.html', context)
 
 def spares(request):
-    if request.GET.get('search'):
-        search = request.GET.get('search')
-        inventory = Inventory.objects.filter(name__icontains=search, category__category_name="Spare part") | Inventory.objects.filter(description__icontains=search, category__category_name="Spare part")
-    else:
-        inventory = Inventory.objects.filter(category__category_name="Spare part", is_displayed=True, quantity__gt=0)
-    count = Cart.cart_count(user_id=request.user.id)
-    p = Paginator(inventory, 30)
-    page_num = request.GET.get('page', 1)
-    try:
-        page = p.page(page_num)
-    except PageNotAnInteger:
-        page = p.page(1)
-    except EmptyPage:
-        page = p.page(1)
-    context = {
-        'inventory' : page,
-        'count' : count,
-    }
-    return render(request, 'spares/spares.html', context)
+    context = get_category(request, "Spare part")
+    
+    return render(request, 'spares/spares.html', context) 
 
 def accessories(request):
-    if request.GET.get('search'):
-        search = request.GET.get('search')
-        inventory = Inventory.objects.filter(name__icontains=search, category__category_name="Accessory") | Inventory.objects.filter(description__icontains=search, category__category_name="Accessory")
-    else:
-        inventory = Inventory.objects.filter(category__category_name="Accessory", is_displayed=True, quantity__gt=0)
-    count = Cart.cart_count(user_id=request.user.id)
-    p = Paginator(inventory, 30)
-    page_num = request.GET.get('page', 1)
-    try:
-        page = p.page(page_num)
-    except PageNotAnInteger:
-        page = p.page(1)
-    except EmptyPage:
-        page = p.page(1)
-    context = {
-        'inventory' : page,
-        'count' : count,
-    }
+    context = get_category(request, "Accessory")
+    
+    return render(request, 'spares/spares.html', context)
+
+def tyres(request):
+    context = get_category(request, "Tyre")
+    
     return render(request, 'spares/spares.html', context)
 
 def inventory(request, id):
@@ -173,5 +148,3 @@ def order(request, id):
         "orders" : order,
     }
     return render(request, 'spares/order.html', context)
-
-
