@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth.decorators import login_required
 from django.contrib import auth, messages
 from django.contrib.sites.shortcuts import get_current_site
 from django.template.loader import render_to_string
@@ -135,6 +136,7 @@ def register(request):
                 return render(request, 'accounts/login.html', context)
         return render(request, 'accounts/login.html')
 
+@login_required(login_url='home')
 def profile(request):
     count = Cart.cart_count(user_id=request.user.id)
     orders_count = Order.order_count(request.user.id)

@@ -22,7 +22,7 @@
             {% for inv in inventory %}
             <tr>
               <td><img src="{{inv.item.photo.url}}" alt="item image" style="height: 100px; width: 150px;"></td>
-              <td>{{ inv.item }}</td>
+              <td>{{ inv.item.name }}</td>
               <td>{{ inv.item.price}}</td>
               <td>{{ inv.item.discount }}</td>
               <td>{{ inv.item.selling_price }}</td>

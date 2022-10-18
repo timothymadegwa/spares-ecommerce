@@ -1,4 +1,3 @@
-from unicodedata import category
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
@@ -10,10 +9,10 @@ import json
 from accounts.forms import ShippingForm
 from .models import *
 from helpers import send_mail
+from .utils import cookie_cart
 
 # Create your views here.
 
-# @login_required(login_url='login')
 def home(request):
     inventory = Inventory.objects.filter(is_displayed=True, quantity__gt=0).order_by('?')
     spares = inventory.filter(category__category_name="Spare part").order_by('?')[:3]
@@ -33,7 +32,7 @@ def spares(request):
         search = request.GET.get('search')
         inventory = Inventory.objects.filter(name__icontains=search, category__category_name="Spare part") | Inventory.objects.filter(description__icontains=search, category__category_name="Spare part")
     else:
-        inventory = Inventory.objects.filter(category__category_name="Spare part", is_displayed=True, quantity__gt=0).order_by('?')
+        inventory = Inventory.objects.filter(category__category_name="Spare part", is_displayed=True, quantity__gt=0)
     count = Cart.cart_count(user_id=request.user.id)
     p = Paginator(inventory, 30)
     page_num = request.GET.get('page', 1)
@@ -54,7 +53,7 @@ def accessories(request):
         search = request.GET.get('search')
         inventory = Inventory.objects.filter(name__icontains=search, category__category_name="Accessory") | Inventory.objects.filter(description__icontains=search, category__category_name="Accessory")
     else:
-        inventory = Inventory.objects.filter(category__category_name="Accessory", is_displayed=True, quantity__gt=0).order_by('?')
+        inventory = Inventory.objects.filter(category__category_name="Accessory", is_displayed=True, quantity__gt=0)
     count = Cart.cart_count(user_id=request.user.id)
     p = Paginator(inventory, 30)
     page_num = request.GET.get('page', 1)
@@ -82,12 +81,16 @@ def inventory(request, id):
     return render(request, 'spares/inventory.html', context)
 
 def cart(request):
-    cart_items = Cart.objects.filter(user = request.user, is_ordered = False).order_by("-id")
-    count= Cart.cart_count(user_id=request.user.id)
-    context = {
-        "inventory" : cart_items,
-        "count" : count,
-    }
+    if request.user.is_authenticated:
+        cart_items = Cart.objects.filter(user = request.user, is_ordered = False).order_by("-id")
+        count = Cart.cart_count(user_id=request.user.id)
+        context = {
+            "inventory" : cart_items,
+            "count" : count,
+        }
+    else:
+        context = cookie_cart(request)
+    
     return render(request, 'spares/cart.html', context)
 
 @csrf_exempt
@@ -140,19 +143,23 @@ def checkout(request):
         #send_mail([request.user.email],'Order Completed!', 'Thank you for ordering your spare parts with us. Kindly track your order though our website')
         messages.success(request, "Your order has been placed")
         return render(request, 'spares/success.html')
+    if request.user.is_authenticated:
+        cart_items = Cart.objects.filter(user = request.user, is_ordered = False).order_by("-id")
+        if cart_items:
+            count = sum(cart_items.values_list('quantity', flat=True))
 
-    cart_items = Cart.objects.filter(user = request.user, is_ordered = False).order_by("-id")
-    if cart_items:
-        count = sum(cart_items.values_list('quantity', flat=True))
-
-        context = {
-            "inventory" : cart_items,
-            "count" : count,
-        }
+            context = {
+                "inventory" : cart_items,
+                "count" : count,
+            }
+    else:
+        context = cookie_cart(request)
+    
         return render(request, 'spares/checkout.html', context)
     messages.error(request, "You cannot view this page!")
     return redirect("home")
 
+@login_required(login_url='home')
 def orders(request):
     orders = Order.objects.filter(user = request.user).order_by("-id")
     context = {
