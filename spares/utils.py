@@ -8,7 +8,11 @@ def get_category(request, category_name):
         inventory = Inventory.objects.filter(name__icontains=search, category__category_name= category_name) | Inventory.objects.filter(description__icontains=search, category__category_name=category_name)
     else:
         inventory = Inventory.objects.filter(category__category_name=category_name, is_displayed=True, quantity__gt=0)
-    count = Cart.cart_count(user_id=request.user.id)
+    if request.user.is_authenticated:
+        count = Cart.cart_count(user_id=request.user.id)
+    else:
+        count = cookie_cart(request)
+        count = count['count']
     p = Paginator(inventory, 30)
     page_num = request.GET.get('page', 1)
     try:

@@ -4,7 +4,6 @@ from django.views.decorators.csrf import csrf_exempt
 from django.db.models import Sum
 from django.http import JsonResponse
 from django.contrib import messages
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 import json
 from accounts.forms import ShippingForm
 from .models import *
@@ -19,7 +18,11 @@ def home(request):
     accessories = inventory.filter(category__category_name="Accessory").order_by('?')[:3]
     tyres = inventory.filter(category__category_name="Tyre").order_by('?')[:3]
     deals = inventory.filter(has_discount=True).order_by('?')[:3]
-    count = Cart.cart_count(user_id=request.user.id)
+    if request.user.is_authenticated:
+        count = Cart.cart_count(user_id=request.user.id)
+    else:
+        count = cookie_cart(request)
+        count = count['count']
     context = {
         'spares' : spares,
         'accessories' : accessories,
@@ -47,7 +50,11 @@ def tyres(request):
 def inventory(request, id):
     item = get_object_or_404(Inventory, id=id)
     inventory = Inventory.objects.filter(category=item.category).order_by('?').exclude(id=item.pk)[:3]
-    count = Cart.cart_count(user_id=request.user.id) 
+    if request.user.is_authenticated:
+        count = Cart.cart_count(user_id=request.user.id)
+    else:
+        count = cookie_cart(request)
+        count = count['count']
     context = {
         "item" : item,
         "inventory" : inventory,
