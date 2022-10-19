@@ -81,8 +81,8 @@ def update_item(request):
     product_id = data["productId"]
     action = data["action"]
     user = request.user
-    product = Inventory.objects.get(id=product_id)
-    cart_item, created = Cart.objects.get_or_create(user=user,item=product, is_ordered = False)
+    product = Inventory.objects.get(id = product_id)
+    cart_item, created = Cart.objects.get_or_create(user = user,item = product, is_ordered = False)
 
     if action == "add":
         cart_item.quantity = cart_item.quantity + 1

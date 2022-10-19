@@ -22,19 +22,19 @@ class CategoryAdmin(admin.ModelAdmin):
 admin.site.register(Category, CategoryAdmin)
 
 class CartAdmin(admin.ModelAdmin):
-    list_display = ('id', 'user', 'quantity', 'is_ordered')
+    list_display = ('id', 'user','customer', 'quantity', 'is_ordered')
     list_display_links = ('id', 'user')
 
 admin.site.register(Cart, CartAdmin)
 
 class ShippingAdmin(admin.ModelAdmin):
-    list_display = ('id', 'user', 'shipping_name', 'phone_number', 'region', 'shipping_location')
+    list_display = ('id', 'user','customer', 'shipping_name', 'phone_number', 'region', 'shipping_location')
     list_display_links = ('id', 'user')
 
 admin.site.register(Shipping, ShippingAdmin)
 
 class OrderAdmin(admin.ModelAdmin):
-    list_display = ('id', 'user', 'order_date', 'paid',)
+    list_display = ('id', 'user', 'customer', 'order_date', 'paid',)
     list_display_links = ('id', 'user')
 
 admin.site.register(Order, OrderAdmin)

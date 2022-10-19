@@ -1,5 +1,5 @@
 from django.contrib import admin
-from accounts.models import FailedLogin, User
+from accounts.models import FailedLogin, User, Customer
 
 # Register your models here.
 class UserAdmin(admin.ModelAdmin):
@@ -16,3 +16,10 @@ class FailedLoginAdmin(admin.ModelAdmin):
     search_fields = ('user',)
 
 admin.site.register(FailedLogin, FailedLoginAdmin)
+
+class CustomerAdmin(admin.ModelAdmin):
+    list_display = ('id','email', 'phone')
+    list_display_links = ('id','email')
+    search_fields = ('email',)
+
+admin.site.register(Customer, CustomerAdmin)

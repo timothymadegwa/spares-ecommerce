@@ -56,3 +56,12 @@ class FailedLogin(models.Model):
 
     def __str__(self):
         return self.user.username
+
+class Customer(models.Model):
+    user = models.OneToOneField(User, on_delete = models.CASCADE, null = True, blank = True)
+    name = models.CharField(max_length = 255, null=False)
+    phone = models.CharField(max_length=50, null=False, blank=False)
+    email = models.EmailField(null=False)
+
+    def __str__(self):
+        return self.name

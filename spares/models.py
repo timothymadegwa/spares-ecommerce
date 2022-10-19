@@ -1,7 +1,7 @@
 from django.db import models
 from django.utils import timezone
 
-from accounts.models import User
+from accounts.models import User, Customer
 
 # Create your models here.
 class Brand(models.Model):
@@ -49,7 +49,8 @@ class Inventory(models.Model):
     
 
 class Cart(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE, null=True, blank=True)
     quantity = models.IntegerField(null=False, blank=False, default=0)
     item = models.ForeignKey(Inventory, on_delete=models.CASCADE)
     is_ordered = models.BooleanField(default=False)
@@ -69,6 +70,7 @@ class Cart(models.Model):
 
 class Shipping(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE, null=True, blank=True)
     shipping_name = models.CharField(max_length=255, blank=False, null=False)
     phone_number = models.CharField(max_length=50, null=False, blank=False)
     region = models.CharField(max_length=50, null=False, blank=False)
@@ -83,6 +85,7 @@ class Shipping(models.Model):
 
 class Order(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE, null=True, blank=True)
     items = models.ManyToManyField("Cart")
     order_date = models.DateTimeField(default=timezone.now)
     payment_method = models.CharField(max_length=100, blank=False, null=False)
