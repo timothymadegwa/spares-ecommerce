@@ -4,7 +4,7 @@ from django.contrib import auth, messages
 from django.contrib.sites.shortcuts import get_current_site
 from django.template.loader import render_to_string
 from django.core.mail import EmailMessage
-from .models import User, FailedLogin
+from .models import User, FailedLogin, Customer
 from spares.models import Cart, Order
 from accounts.forms import LoginForm, RegistrationForm
 from django.conf import settings
@@ -114,6 +114,8 @@ def register(request):
                 else:
                     user = User.objects.create_user(first_name=f_name, last_name=l_name, email=email, phone=phone, password=password)
                     user.save()
+                    customer = Customer.objects.create(user = user, name = user.get_full_name(), email = user.email, phone = user.phone)
+                    customer.save()
                     current_site = get_current_site(request)
                     email_subject = "Welcome!"
                     context = { 'user' : user,

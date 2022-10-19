@@ -9,7 +9,7 @@ def get_category(request, category_name):
     else:
         inventory = Inventory.objects.filter(category__category_name=category_name, is_displayed=True, quantity__gt=0)
     if request.user.is_authenticated:
-        count = Cart.cart_count(user_id=request.user.id)
+        count = Cart.cart_count(customer_id=request.user.customer.id)
     else:
         count = cookie_cart(request)
         count = count['count']

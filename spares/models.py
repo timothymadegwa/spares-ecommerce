@@ -49,7 +49,7 @@ class Inventory(models.Model):
     
 
 class Cart(models.Model):
-    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
+    #user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE, null=True, blank=True)
     quantity = models.IntegerField(null=False, blank=False, default=0)
     item = models.ForeignKey(Inventory, on_delete=models.CASCADE)
@@ -63,13 +63,13 @@ class Cart(models.Model):
         return self.item.selling_price * self.quantity
 
     @classmethod
-    def cart_count(cls, user_id):
-        items = cls.objects.filter(user = user_id, is_ordered = False)
+    def cart_count(cls, customer_id):
+        items = cls.objects.filter(customer_id = customer_id, is_ordered = False)
         count= sum(items.values_list('quantity', flat=True))
         return int(count)
 
 class Shipping(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    #user = models.ForeignKey(User, on_delete=models.CASCADE)
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE, null=True, blank=True)
     shipping_name = models.CharField(max_length=255, blank=False, null=False)
     phone_number = models.CharField(max_length=50, null=False, blank=False)
@@ -84,7 +84,7 @@ class Shipping(models.Model):
         return 200.0
 
 class Order(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    #user = models.ForeignKey(User, on_delete=models.CASCADE)
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE, null=True, blank=True)
     items = models.ManyToManyField("Cart")
     order_date = models.DateTimeField(default=timezone.now)
@@ -109,11 +109,11 @@ class Order(models.Model):
         return self.item_total + self.shipping_details.shipping_fee
 
     @classmethod
-    def order_count(cls, user_id):
-        orders = cls.objects.filter(user=user_id)
+    def order_count(cls, customer_id):
+        orders = cls.objects.filter(customer=customer_id)
         return len(orders)
 
     @classmethod
-    def delivered_orders(cls, user_id):
-        orders = cls.objects.filter(user=user_id, delivered = True)
+    def delivered_orders(cls, customer_id):
+        orders = cls.objects.filter(customer=customer_id, delivered = True)
         return len(orders)
