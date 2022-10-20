@@ -140,8 +140,9 @@ def register(request):
 
 @login_required(login_url='home')
 def profile(request):
-    count = Cart.cart_count(user_id=request.user.id)
-    orders_count = Order.order_count(request.user.id)
+    customer = request.user.customer
+    count = Cart.cart_count(customer_id=customer.id)
+    orders_count = Order.order_count(customer.id)
     delivered_orders_count = Order.delivered_orders(request.user.id)
     context = {
         "count" : count,

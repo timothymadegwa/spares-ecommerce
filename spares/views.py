@@ -6,10 +6,10 @@ from django.db.models import Sum
 from django.http import JsonResponse
 from django.contrib import messages
 import json
-from accounts.forms import ShippingForm
+from .forms import ShippingForm
 from .models import *
 from helpers import send_mail
-from .utils import cookie_cart, get_category
+from .utils import cookie_cart, get_category, cookie_checkout
 
 # Create your views here.
 
@@ -116,7 +116,7 @@ def checkout(request):
         form = ShippingForm(request.POST)
         if form.is_valid():
             name = form.cleaned_data['shipping_name']
-            phone = form.cleaned_data['phone_number']
+            email = form.cleaned_data['shipping_name']
             phone = form.cleaned_data['phone_number']
             region = form.cleaned_data['region']
             location = form.cleaned_data['shipping_location']
@@ -125,19 +125,27 @@ def checkout(request):
             message = "Please fill in all the fields"
             messages.error(request, message)
             return render(request, 'spares/checkout.html')
-        customer = user.customer
-        shipping = Shipping(customer = customer, shipping_name = name, phone_number = phone,
-                            region = region, shipping_location = location)
-        shipping.save()
-        cart_items = Cart.objects.filter(customer = customer, is_ordered = False)
-        order = Order(customer = customer, shipping_details = shipping)
-        order.save()
-        order.items.add(*cart_items)
-        order.save()
-        cart_items.update(is_ordered= True)
-        #send_mail([request.user.email],'Order Completed!', 'Thank you for ordering your spare parts with us. Kindly track your order though our website')
-        messages.success(request, "Your order has been placed")
-        return render(request, 'spares/success.html')
+        if request.user.is_authenticated:
+            customer = user.customer
+            shipping = Shipping(customer = customer, shipping_name = name, phone_number = phone,
+                                region = region, shipping_location = location)
+            shipping.save()
+            cart_items = Cart.objects.filter(customer = customer, is_ordered = False)
+            order = Order(customer = customer, shipping_details = shipping)
+            order.save()
+            order.items.add(*cart_items)
+            order.save()
+            cart_items.update(is_ordered= True)
+            #send_mail([request.user.email],'Order Completed!', 'Thank you for ordering your spare parts with us. Kindly track your order though our website')
+            messages.success(request, "Your order has been placed")
+            return render(request, 'spares/success.html')
+        else:
+            customer, created = Customer.objects.get_or_create(name = name, email = email, phone = phone)
+            shipping = Shipping(customer = customer, shipping_name = name, phone_number = phone,
+                                region = region, shipping_location = location)
+            shipping.save()
+            results = cookie_checkout(request, customer, shipping)
+            return render(request, 'spares/success.html')
     if request.user.is_authenticated:
         cart_items = Cart.objects.filter(customer = request.user.customer, is_ordered = False).order_by("-id")
         if cart_items:
@@ -150,14 +158,11 @@ def checkout(request):
         return render(request, 'spares/checkout.html', context)
     else:
         context = cookie_cart(request)
-    
         return render(request, 'spares/checkout.html', context)
-    messages.error(request, "You cannot view this page!")
-    return redirect("home")
 
 @login_required(login_url='home')
 def orders(request):
-    orders = Order.objects.filter(user = request.user).order_by("-id")
+    orders = Order.objects.filter(customer = request.user.customer).order_by("-id")
     context = {
         "inventory" : orders
     }

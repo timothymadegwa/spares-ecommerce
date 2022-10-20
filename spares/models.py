@@ -77,14 +77,13 @@ class Shipping(models.Model):
     shipping_location = models.CharField(max_length=255, blank=False, null=False)
 
     def __str__(self):
-        return self.user.email
+        return self.customer.email
 
     @property
     def shipping_fee(self):
         return 200.0
 
 class Order(models.Model):
-    #user = models.ForeignKey(User, on_delete=models.CASCADE)
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE, null=True, blank=True)
     items = models.ManyToManyField("Cart")
     order_date = models.DateTimeField(default=timezone.now)
@@ -95,7 +94,7 @@ class Order(models.Model):
     shipping_details = models.ForeignKey(Shipping, on_delete=models.CASCADE)
     
     def __str__(self):
-        return self.user.email
+        return self.customer.email
 
     @property
     def item_total(self):

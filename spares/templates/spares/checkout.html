@@ -49,6 +49,12 @@
                 <input type="text" class="form-control rounded-pill" id="name" name="shipping_name" placeholder='Enter your Full Name' maxlength="50" required>
                 <label for="name"> <i class="fas fa-user px-2" aria-hidden="true"></i> Full Name</label>
               </div>
+              {% if not request.user.is_authenticated %}
+              <div class="form-floating mb-3 mx-3">
+                <input type="email" class="form-control rounded-pill" id="email" name="email" placeholder="Email" value="{{request.user.email}}" required>
+                <label for="email"><i class="fas fa-envelope px-2"></i> E-Mail</label>
+              </div>
+              {% endif %}
               <div class="form-floating mb-3 mx-3">
                 <input type="tel" class="form-control rounded-pill" id="phone" name="phone_number" pattern="[0-9]{12}" placeholder="Phone Number" value="{{values.phone}}" required>
                 <label for="phone"><i class="fas fa-phone px-2"></i> Phone Number (<small>Format: 254712XXXXXX</small>)</label>

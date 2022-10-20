@@ -1,5 +1,5 @@
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from spares.models import Inventory, Cart
+from spares.models import Inventory, Cart, Order
 import json
 
 def get_category(request, category_name):
@@ -56,3 +56,23 @@ def cookie_cart(request):
                 "inventory" : cart_items
                 }
     return context
+
+def cookie_checkout(request, customer, shipping):
+    try:
+        cart = json.loads(request.COOKIES['cart'])
+    except:
+        return False
+    for i in cart:
+        product = Inventory.objects.get(id = i)
+        quantity = cart[i]['quantity']
+        cart_item = Cart.objects.create(customer = customer, item = product, quantity = quantity)
+        cart_item.save()
+    
+    cart_items = Cart.objects.filter(customer = customer, is_ordered = False)
+    order = Order(customer = customer, shipping_details = shipping)
+    order.save()
+    order.items.add(*cart_items)
+    order.save()
+    cart_items.update(is_ordered= True)
+    #send_mail([customer.email],'Order Completed!', 'Thank you for ordering your spare parts with us. Kindly track your order though our website')
+    return True
