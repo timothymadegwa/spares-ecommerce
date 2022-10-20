@@ -71,7 +71,7 @@
                 <label for="location_details"> <i class="fas fa-location-arrow"></i> Location Details</label>
               </div>                  
               <div class="text-center">
-                <button type="submit" class="btn alert-dark btn-outline-dark rounded-pill col-4" onclick="return confirm('Are you sure you want to confirm this order?');">Confirm Order</button><br><br>
+                <button type="submit" class="btn alert-dark btn-outline-dark rounded-pill col-4" onclick="checkoutClicked()">Confirm Order</button><br><br>
               </div><br>
             </form>
     </div>
@@ -82,5 +82,17 @@
     
 
 <script type="text/javascript" src="{% static 'js/cartTotal.js' %}"></script>
+
+<script type="text/javascript">
+  function checkoutClicked(){
+    confirm('Are you sure you want to confirm this order?');
+    clearCart();
+
+  }
+  function clearCart(){
+    cart = {}
+    document.cookie = 'cart=' + JSON.stringify(cart) + ";domain=;path=/"
+  }
+</script>
 
 {% endblock content %}
