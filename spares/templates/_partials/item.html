@@ -4,9 +4,9 @@
       <div class="card-body">
         <p class="card-text">{{inv.name}}</p>
         {% if inv.has_discount %}
-        <p><s class="text-danger">KES {{inv.price}}</s> KES {{inv.selling_price}}</p>
+        <p><s class="text-danger">KES {{inv.price}}</s> KES {{inv.selling_price}}<br> <span class="text-success">(Save {{inv.percentage_discount}} %)</span></p>
         {% else %}
-        <p>KES {{inv.price}}</p>
+        <p>KES {{inv.price}}</p><br>
         {% endif %}
         <div class="d-flex justify-content-between align-items-center">
           <div class="btn-group">

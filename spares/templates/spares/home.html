@@ -48,7 +48,7 @@
 
 
 
-    <div class="row row-cols-3 text-center home">
+    <div class="row row-cols-2 text-center home">
         <div class="col mb-3 p-2">
           <div class="card shadow h-100">
             <div class="card-body">
@@ -75,21 +75,22 @@
       </div>
     </div><br><br><br>
     <div class="row">
-        <h3 class="text-danger">FEATURED SPARE PARTS</h3><hr>
+        <h3 class="text-danger">FEATURED SPARE PARTS</h3> <span class="text-end"><a class="text danger" href="{% url 'spares' %}">See more <i class="fas fa-arrow-right"></i></a></span>
+        <hr>
         {% for inv in spares %}
           {% include '_partials/item.html'%}
         {% endfor %} 
 
     </div><br>
     <div class="row">
-      <h3 class="text-danger">FEATURED ACCESSORIES</h3><hr>
+      <h3 class="text-danger">FEATURED ACCESSORIES</h3><span class="text-end"><a class="text danger" href="{% url 'accessories' %}">See more <i class="fas fa-arrow-right"></i></a></span><hr>
       {% for inv in accessories %}
         {% include '_partials/item.html'%}
       {% endfor %} 
 
   </div><br>
   <div class="row">
-    <h3 class="text-danger">FEATURED TYRES</h3><hr>
+    <h3 class="text-danger">FEATURED TYRES</h3> <span class="text-end"><a class="text danger" href="{% url 'tyres' %}">See more <i class="fas fa-arrow-right"></i></a></span><hr>
     {% for inv in tyres %}
       {% include '_partials/item.html'%}
     {% endfor %} 
