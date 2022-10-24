@@ -2,6 +2,7 @@ from venv import create
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Sum
 from django.http import JsonResponse
 from django.contrib import messages
@@ -47,6 +48,29 @@ def tyres(request):
     context = get_category(request, "Tyre")
     
     return render(request, 'spares/spares.html', context)
+
+def deals(request):
+    inventory = Inventory.objects.filter(has_discount = True, is_displayed=True, quantity__gt=0).order_by("-discount")
+    if request.user.is_authenticated:
+        count = Cart.cart_count(customer_id=request.user.customer.id)
+    else:
+        count = cookie_cart(request)
+        count = count['count']
+    p = Paginator(inventory, 30)
+    page_num = request.GET.get('page', 1)
+    try:
+        page = p.page(page_num)
+    except PageNotAnInteger:
+        page = p.page(1)
+    except EmptyPage:
+        page = p.page(1)
+    context = {
+        'inventory' : page,
+        'count' : count,
+    }
+    
+    return render(request, 'spares/spares.html', context)
+
 
 def inventory(request, id):
     item = get_object_or_404(Inventory, id=id)

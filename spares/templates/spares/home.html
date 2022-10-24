@@ -97,7 +97,7 @@
 
 </div><br>
   <div class="row">
-    <h3 class="text-danger">HOT DEALS!</h3><hr>
+    <h3 class="text-danger">HOT DEALS!</h3><span class="text-end"><a class="text danger" href="{% url 'deals' %}">See more <i class="fas fa-arrow-right"></i></a></span><hr>
     {% for inv in deals %}
       {% include '_partials/item.html'%}
     {% endfor %} 
