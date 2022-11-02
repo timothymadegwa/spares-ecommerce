@@ -36,7 +36,7 @@ def cookie_cart(request):
     num_of_items = 0
     for i in cart:
         product = Inventory.objects.get(id = i)
-        total = (product.price * cart[i]['quantity'])
+        total = (product.selling_price * cart[i]['quantity'])
         cart_item = {
             'item':{
                 'id' : product.id,
