@@ -140,7 +140,7 @@ def checkout(request):
         form = ShippingForm(request.POST)
         if form.is_valid():
             name = form.cleaned_data['shipping_name']
-            email = form.cleaned_data['shipping_name']
+            email = form.cleaned_data['email']
             phone = form.cleaned_data['phone_number']
             region = form.cleaned_data['region']
             location = form.cleaned_data['shipping_location']
