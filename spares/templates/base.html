@@ -52,15 +52,16 @@
                 <a class="nav-link" href="{% url 'profile' %}"><i class="fas fa-user fa-lg px-2" aria-hidden="true"></i> Profile</a>
             </li>
             {% endif %}
-            <li class="nav-item">
-                <a class="nav-link" href="{% url 'spares' %}"><i class="fas fa-wrench fa-lg px-2"></i> Spares</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{% url 'accessories' %}"><i class="fas fa-plus fa-lg px-2"></i> Accessories</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{% url 'tyres' %}"><i class="fas fa-plus fa-lg px-2"></i> Tyres</a>
-            </li>
+            
+            {% if categories %}
+                {% for category in categories %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'shop' category.id %}"><i class="fas fa-plus fa-lg px-2"></i> {{ category.category_name}}</a>
+                </li>
+                {% endfor %}
+            {% endif %}
+            
+            
             <li class="nav-item">
                 <a class="nav-link" href="{% url 'deals' %}"><i class="fas fa-fire fa-lg px-2"></i> Deals</a>
             </li>

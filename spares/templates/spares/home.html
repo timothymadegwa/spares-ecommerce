@@ -47,61 +47,38 @@
       </div><br><hr>
 
 
-
     <div class="row row-cols-2 text-center home">
-        <div class="col mb-3 p-2">
-          <div class="card shadow h-100">
-            <div class="card-body">
-                <i class="fas fa-car fa-3x " aria-hidden="true"></i> <i class="fas fa-wrench fa-3x" aria-hidden="true"></i>
-              <a href="{% url 'spares' %}" class="stretched-link"><h5 class="card-title"><br>BUY SPARE PARTS</h5></a>
-            </div>
+      {% for category in categories %}
+      <div class="col mb-3 p-2">
+        <div class="card shadow h-100">
+          <div class="card-body">
+            <i class="fas fa-shopping-cart fa-3x"></i> <i class="fas fa-plus fa-3x" aria-hidden="true"></i>
+            <a href="{% url 'shop' category.id %}" class="stretched-link"><h5 class="card-title"><br><p class="text-uppercase">Shop for {{ category.category_name }}</p></h5></a>
           </div>
         </div>
-        <div class="col mb-3 p-2">
-            <div class="card shadow h-100">
-              <div class="card-body">
-                <i class="fas fa-car fa-3x" aria-hidden="true"></i> <i class="fas fa-plus fa-3x px-2" aria-hidden="true"></i>
-                <a href="{% url 'accessories' %}" class="stretched-link"><h5 class="card-title"><br>BUY ACCESSORIES</h5></a>
-              </div>
-            </div>
-        </div>
-        <div class="col mb-3 p-2">
-          <div class="card shadow h-100">
-            <div class="card-body">
-              <i class="fas fa-car fa-3x" aria-hidden="true"></i> <i class="fas fa-tire-flat fa-3x px-2" aria-hidden="true"></i>
-              <a href="{% url 'tyres' %}" class="stretched-link"><h5 class="card-title"><br>BUY TYRES</h5></a>
-            </div>
-          </div>
       </div>
+      {% endfor %}
     </div><br><br><br>
+
     <div class="row">
-        <h3 class="text-danger">FEATURED SPARE PARTS</h3> <span class="text-end"><a class="text danger" href="{% url 'spares' %}">See more <i class="fas fa-arrow-right"></i></a></span>
+      <h3 class="text-danger">HOT DEALS!</h3><span class="text-end"><a class="text danger" href="{% url 'deals' %}">See more <i class="fas fa-arrow-right"></i></a></span><hr>
+      {% for inv in deals %}
+        {% include '_partials/item.html'%}
+      {% endfor %} 
+    </div><br>
+
+    <div class="row">
+      {% for shuffled_category in shuffled_categories %}
+      <h3 class="text-danger text-uppercase">FEATURED {{shuffled_category.category_name}}</h3> <span class="text-end"><a class="text danger" href="{% url 'shop' shuffled_category.id %}">See more <i class="fas fa-arrow-right"></i></a></span>
         <hr>
         {% for inv in spares %}
           {% include '_partials/item.html'%}
-        {% endfor %} 
+        {% endfor %}
 
-    </div><br>
-    <div class="row">
-      <h3 class="text-danger">FEATURED ACCESSORIES</h3><span class="text-end"><a class="text danger" href="{% url 'accessories' %}">See more <i class="fas fa-arrow-right"></i></a></span><hr>
-      {% for inv in accessories %}
-        {% include '_partials/item.html'%}
-      {% endfor %} 
+      {% endfor %}
 
-  </div><br>
-  <div class="row">
-    <h3 class="text-danger">FEATURED TYRES</h3> <span class="text-end"><a class="text danger" href="{% url 'tyres' %}">See more <i class="fas fa-arrow-right"></i></a></span><hr>
-    {% for inv in tyres %}
-      {% include '_partials/item.html'%}
-    {% endfor %} 
+    </div>
 
-</div><br>
-  <div class="row">
-    <h3 class="text-danger">HOT DEALS!</h3><span class="text-end"><a class="text danger" href="{% url 'deals' %}">See more <i class="fas fa-arrow-right"></i></a></span><hr>
-    {% for inv in deals %}
-      {% include '_partials/item.html'%}
-    {% endfor %} 
-
-</div><br><br><br><br>
+  <br><br><br>
 </div>
 {% endblock content %}
