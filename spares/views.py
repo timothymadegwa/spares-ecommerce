@@ -1,4 +1,3 @@
-from venv import create
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
@@ -34,7 +33,7 @@ def home(request):
         'deals' : deals,
         'count' : count,
         'categories' : categories,
-        "shuffled_categories" : shuffled_categories,
+        'shuffled_categories' : shuffled_categories,
     }
     return render(request, 'spares/home.html', context)
 
@@ -129,6 +128,7 @@ def cart(request):
         
     else:
         context = cookie_cart(request)
+        context['categories'] = categories
     
     return render(request, 'spares/cart.html', context)
 

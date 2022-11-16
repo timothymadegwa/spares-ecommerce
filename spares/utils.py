@@ -1,7 +1,6 @@
 from spares.models import Inventory, Cart, Order
 import json
 
-
 def cookie_cart(request):
     try:
         cart = json.loads(request.COOKIES['cart'])
