@@ -71,9 +71,21 @@
       {% for shuffled_category in shuffled_categories %}
       <h3 class="text-danger text-uppercase">FEATURED {{shuffled_category.category_name}}</h3> <span class="text-end"><a class="text danger" href="{% url 'shop' shuffled_category.id %}">See more <i class="fas fa-arrow-right"></i></a></span>
         <hr>
-        {% for inv in spares %}
-          {% include '_partials/item.html'%}
-        {% endfor %}
+        {% if shuffled_category.category_name == "Spare parts" %}
+          {% for inv in spares %}
+            {% include '_partials/item.html'%}
+          {% endfor %}
+        {% endif %}
+        {% if shuffled_category.category_name == "Tyres" %}
+          {% for inv in tyres %}
+            {% include '_partials/item.html'%}
+          {% endfor %}
+        {% endif %}
+        {% if shuffled_category.category_name == "Accessories" %}
+          {% for inv in accessories %}
+            {% include '_partials/item.html'%}
+          {% endfor %}
+        {% endif %}
 
       {% endfor %}
 
