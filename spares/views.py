@@ -189,7 +189,7 @@ def checkout(request):
             order.items.add(*cart_items)
             order.save()
             cart_items.update(is_ordered= True)
-            #send_mail([request.user.email],'Order Completed!', 'Thank you for ordering your spare parts with us. Kindly track your order though our website')
+            send_mail([request.user.email],'Order Completed!', 'Thank you for ordering your spare parts with us. Kindly track your order though our website')
             messages.success(request, "Your order has been placed")
             return render(request, 'spares/success.html')
         else:
