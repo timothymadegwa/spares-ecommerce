@@ -5,7 +5,6 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Sum
 from django.http import JsonResponse
 from django.contrib import messages
-from django.contrib.postgres.search import SearchRank, SearchVector, SearchQuery
 import json
 from .forms import ShippingForm
 from .models import *
@@ -43,10 +42,7 @@ def shop(request, id):
     categories = Category.objects.all()
     if request.GET.get('search'):
         search = request.GET.get('search')
-        vector = SearchVector("name", weight="A") + SearchVector("description", weight="B") + SearchVector("brand__brand_name", weight="C")
-        result_query = SearchQuery(search)
-        inventory = Inventory.objects.annotate(rank=SearchRank(vector, result_query, cover_density=True)).order_by('-rank')
-        inventory = inventory.filter(category = id)
+        inventory = Inventory.objects.filter(name__icontains=search, category= id) | Inventory.objects.filter(description__icontains=search, category=id)
     else:
         inventory = Inventory.objects.filter(category = id, is_displayed=True, quantity__gt=0)
     if request.user.is_authenticated:
@@ -189,7 +185,7 @@ def checkout(request):
             order.items.add(*cart_items)
             order.save()
             cart_items.update(is_ordered= True)
-            send_mail([request.user.email],'Order Completed!', 'Thank you for ordering your spare parts with us. Kindly track your order though our website')
+            #send_mail([request.user.email],'Order Completed!', 'Thank you for ordering your spare parts with us. Kindly track your order though our website')
             messages.success(request, "Your order has been placed")
             return render(request, 'spares/success.html')
         else:
