@@ -40,4 +40,4 @@ class OrderAdmin(admin.ModelAdmin):
 
 admin.site.register(Order, OrderAdmin)
 
-admin.site.site_header = "Spares Shop KE"
+admin.site.site_header = "All Things Auto KE"
